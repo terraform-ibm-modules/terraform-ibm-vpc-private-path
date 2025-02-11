@@ -3,7 +3,7 @@
 ##############################################################################
 
 resource "ibm_is_lb" "ppnlb" {
-  name           = "${var.nlb_name}-nlb"
+  name           = var.nlb_name
   subnets        = [var.subnet_id]
   type           = "private_path"
   profile        = "network-private-path"

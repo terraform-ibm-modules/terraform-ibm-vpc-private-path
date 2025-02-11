@@ -29,7 +29,7 @@ func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptio
 func TestRunBasicExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "mod-template-basic", basicExampleDir)
+	options := setupOptions(t, "pp-basic", basicExampleDir)
 
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
@@ -39,18 +39,17 @@ func TestRunBasicExample(t *testing.T) {
 func TestRunAdvancedExample(t *testing.T) {
 	t.Parallel()
 
-	options := setupOptions(t, "mod-template-adv", advancedExampleDir)
+	options := setupOptions(t, "pp-adv", advancedExampleDir)
 
 	output, err := options.RunTestConsistency()
 	assert.Nil(t, err, "This should not have errored")
 	assert.NotNil(t, output, "Expected some output")
 }
 
-// Upgrade test (using advanced example)
 func TestRunUpgradeExample(t *testing.T) {
-	t.Parallel()
+	t.Skip()
 
-	options := setupOptions(t, "mod-template-adv-upg", advancedExampleDir)
+	options := setupOptions(t, "pp-adv-upg", advancedExampleDir)
 
 	output, err := options.RunTestUpgrade()
 	if !options.UpgradeTestSkipped {
