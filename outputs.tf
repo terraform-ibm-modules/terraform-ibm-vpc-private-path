@@ -1,30 +1,48 @@
 ########################################################################################################################
 # Outputs
 ########################################################################################################################
-
-#
-# Developer tips:
-#   - Below are some good practise sample outputs
-#   - They should be updated for outputs applicable to the module being added
-#   - Use variable validation when possible
-#
-
-output "account_id" {
-  description = "An alpha-numeric value identifying the account ID."
-  value       = ibm_resource_instance.cos_instance.account_id
+output "lb_crn" {
+  description = "The CRN for this load balancer."
+  value       = ibm_is_lb.ppnlb.crn
 }
 
-output "guid" {
-  description = "The GUID of the resource instance."
-  value       = ibm_resource_instance.cos_instance.account_id
+output "lb_id" {
+  description = "The unique identifier of the load balancer."
+  value       = ibm_is_lb.ppnlb.id
 }
 
-output "id" {
-  description = "The unique identifier of the resource instance."
-  value       = ibm_resource_instance.cos_instance.id
+output "pool_id" {
+  description = "The unique identifier of the load balancer pool."
+  value       = ibm_is_lb_pool.pool.id
 }
 
-output "crn" {
-  description = "The CRN of the resource instance."
-  value       = ibm_resource_instance.cos_instance.crn
+output "pool_member_id" {
+  description = "The unique identifier of the load balancer pool member."
+  value       = ibm_is_lb_pool_member.nlb_pool_members[*].id
+}
+
+output "listener_id" {
+  description = "The unique identifier of the load balancer listener."
+  value       = ibm_is_lb_listener.listener.id
+}
+
+output "private_path_crn" {
+  description = "The CRN for this private path service gateway."
+  value       = ibm_is_private_path_service_gateway.private_path.crn
+}
+
+output "private_path_id" {
+  description = "The unique identifier of the PrivatePathServiceGateway."
+  value       = ibm_is_private_path_service_gateway.private_path.id
+}
+
+output "private_path_vpc" {
+  description = "The VPC this private path service gateway resides in."
+  value       = ibm_is_private_path_service_gateway.private_path.vpc
+}
+
+output "account_policy_id" {
+  description = "The unique identifier of the PrivatePathServiceGatewayAccountPolicy."
+  value = length(var.private_path_account_policies) != 0 ? [for id in ibm_is_private_path_service_gateway_account_policy.private_path_account_policies :
+  id] : null
 }

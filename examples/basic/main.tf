@@ -10,22 +10,33 @@ module "resource_group" {
   existing_resource_group_name = var.resource_group
 }
 
+##############################################################################
+# VPC
+##############################################################################
+
+resource "ibm_is_vpc" "example_vpc" {
+  name           = "${var.prefix}-vpc"
+  resource_group = module.resource_group.resource_group_id
+  tags           = var.resource_tags
+}
+
+resource "ibm_is_subnet" "testacc_subnet" {
+  name                     = "${var.prefix}-subnet"
+  vpc                      = ibm_is_vpc.example_vpc.id
+  zone                     = "${var.region}-1"
+  total_ipv4_address_count = 256
+  resource_group           = module.resource_group.resource_group_id
+}
+
 ########################################################################################################################
-# COS
+# Private Path
 ########################################################################################################################
 
-#
-# Developer tips:
-#   - Call the local module / modules in the example to show how they can be consumed
-#   - include the actual module source as a code comment like below so consumers know how to consume from correct location
-#
-
-module "cos" {
-  source = "../.."
-  # remove the above line and uncomment the below 2 lines to consume the module from the registry
-  # source            = "terraform-ibm-modules/<replace>/ibm"
-  # version           = "X.Y.Z" # Replace "X.Y.Z" with a release version to lock into a specific release
-  name              = "${var.prefix}-cos"
-  resource_group_id = module.resource_group.resource_group_id
-  resource_tags     = var.resource_tags
+module "private_path" {
+  source                         = "../.."
+  resource_group_id              = module.resource_group.resource_group_id
+  subnet_id                      = ibm_is_subnet.testacc_subnet.id
+  nlb_name                       = "${var.prefix}-nlb"
+  private_path_name              = "${var.prefix}-pp"
+  private_path_service_endpoints = ["test.example.com"]
 }
