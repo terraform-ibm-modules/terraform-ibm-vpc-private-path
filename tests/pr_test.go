@@ -47,7 +47,7 @@ func TestRunAdvancedExample(t *testing.T) {
 }
 
 func TestRunUpgradeExample(t *testing.T) {
-	t.Skip()
+	t.Parallel()
 
 	options := setupOptions(t, "pp-adv-upg", advancedExampleDir)
 
