@@ -75,10 +75,10 @@ module "private_path" {
   subnet_id                          = ibm_is_subnet.provider_subnet.id
   nlb_name                           = "${var.prefix}-nlb"
   private_path_name                  = "${var.prefix}-pp"
-  private_path_service_endpoints     = ["test.example.com"]
+  private_path_service_endpoints     = ["private-path-example.ibm.com"]
   private_path_default_access_policy = "permit"
   nlb_pool_member_instance_ids       = [for vsi in ibm_is_instance.vsi : vsi.id]
-  nlb_pool_member_port               = 3120
+  nlb_pool_member_port               = 80
 }
 
 ##############################################################################
