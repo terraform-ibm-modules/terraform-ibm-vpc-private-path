@@ -80,7 +80,7 @@ module "private_path" {
   subnet_id                      = "xxXXxxXXxXxXXXXxxXxxxXXXXxXXXXX" # Replace with the actual ID of subnet to use
   nlb_name                       = "nlb-name"
   private_path_name              = "private-path-name"
-  private_path_service_endpoints = ["private-path-example.ibm.com"]
+  private_path_service_endpoints = ["vpc-pps.example.com"]
 }
 ```
 

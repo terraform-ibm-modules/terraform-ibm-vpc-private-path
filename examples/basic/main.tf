@@ -38,5 +38,5 @@ module "private_path" {
   subnet_id                      = ibm_is_subnet.testacc_subnet.id
   nlb_name                       = "${var.prefix}-nlb"
   private_path_name              = "${var.prefix}-pp"
-  private_path_service_endpoints = ["private-path-example.ibm.com"]
+  private_path_service_endpoints = ["vpc-pps.example.com"]
 }
