@@ -28,7 +28,6 @@ The Private Path solution solves security, privacy and complexity problems. Thro
 * [terraform-ibm-vpc-private-path](#terraform-ibm-vpc-private-path)
 * [Examples](./examples)
     * [Advanced example](./examples/advanced)
-    * [Basic example](./examples/basic)
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
