@@ -63,9 +63,10 @@ resource "ibm_is_instance" "vsi" {
     }
   }
 
-  vpc  = ibm_is_vpc.provider_vpc.id
-  zone = "${var.region}-1"
-  keys = [ibm_is_ssh_key.public_key.id]
+  vpc       = ibm_is_vpc.provider_vpc.id
+  zone      = "${var.region}-1"
+  keys      = [ibm_is_ssh_key.public_key.id]
+  user_data = file("./userdata.sh")
 }
 
 
@@ -79,6 +80,11 @@ module "private_path" {
   private_path_default_access_policy = "permit"
   nlb_pool_member_instance_ids       = [for vsi in ibm_is_instance.vsi : vsi.id]
   nlb_pool_member_port               = 80
+  nlb_pool_health_delay              = 60
+  nlb_pool_health_retries            = 5
+  nlb_pool_health_timeout            = 30
+  nlb_pool_health_type               = "http"
+  nlb_listener_port                  = 80
 }
 
 ##############################################################################
