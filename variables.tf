@@ -8,13 +8,13 @@ variable "resource_group_id" {
 
 variable "tags" {
   type        = list(string)
-  description = "Optional list of tags to be added to the Redis instance."
+  description = "Optional list of tags to be added to the private path service."
   default     = []
 }
 
 variable "access_tags" {
   type        = list(string)
-  description = "A list of access tags to apply to the Redis instance created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details"
+  description = "A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details"
   default     = []
 
   validation {
