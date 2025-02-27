@@ -9,7 +9,7 @@
         "target_terraform",
         "terraform",
         "solution",
-        "security"
+        "network"
       ],
       "keywords": [
         "vpc",
@@ -38,15 +38,15 @@
       ],
       "flavors": [
         {
-          "label": "Standard",
-          "name": "standard",
+          "label": "Flexible",
+          "name": "flexible",
           "install_type": "fullstack",
           "working_directory": "solutions/standard",
           "dependency_version_2": true,
           "dependencies": [
             {
               "flavors": [
-                "standard"
+                "flexible"
               ],
               "id": "9fc0fa64-27af-4fed-9dce-47b3640ba739-global",
               "name": "deploy-arch-ibm-slz-vpc",
