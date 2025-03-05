@@ -19,20 +19,14 @@ variable "provider_visibility" {
   }
 }
 
-variable "use_existing_resource_group" {
-  type        = bool
-  description = "Whether to use an existing resource group."
-  default     = false
-}
-
 variable "resource_group_name" {
   type        = string
-  description = "The name of a new or an existing resource group in which to provision the Databases for Elasicsearch in.  If a `prefix` input variable is specified, it is added to this name in the `<prefix>-value` format."
+  description = "The name of an existing resource group in which to provision the private path services in.  If a `prefix` input variable is specified, it is added to this name in the `<prefix>-value` format."
 }
 
 variable "region" {
   type        = string
-  description = "The region in which the Event Notifications resources are provisioned."
+  description = "The region in which the VPC resources are provisioned."
   default     = "us-south"
 }
 

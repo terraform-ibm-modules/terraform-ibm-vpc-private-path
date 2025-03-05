@@ -110,7 +110,6 @@ func TestStandardSolutionInSchematics(t *testing.T) {
 		})
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
-			{Name: "use_existing_resource_group", Value: true, DataType: "bool"},
 			{Name: "prefix", Value: prefix, DataType: "string"},
 			{Name: "region", Value: region, DataType: "string"},
 			{Name: "resource_group_name", Value: terraform.Output(t, existingTerraformOptions, "resource_group_name"), DataType: "string"},
