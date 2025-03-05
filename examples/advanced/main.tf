@@ -105,12 +105,14 @@ resource "ibm_is_subnet" "consumer_subnet" {
   resource_group           = module.resource_group.resource_group_id
 }
 
-resource "ibm_is_virtual_endpoint_gateway" "vpe" {
-  name = "${var.prefix}-consumer-gateway"
-  target {
-    crn           = module.private_path.private_path_crn
-    resource_type = "private_path_service_gateway"
-  }
-  vpc            = ibm_is_vpc.consumer_vpc.id
-  resource_group = module.resource_group.resource_group_id
+module "vpe" {
+  source            = "terraform-ibm-modules/vpe-gateway/ibm"
+  version           = "4.5.0"
+  resource_group_id = module.resource_group.resource_group_id
+  vpc_id            = ibm_is_vpc.consumer_vpc.id
+  cloud_service_by_crn = [
+    {
+      crn          = module.private_path.private_path_crn
+      service_name = "private-path"
+  }]
 }
