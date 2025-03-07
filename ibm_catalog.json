@@ -73,11 +73,19 @@
             {
               "key": "prefix",
               "required": true,
-              "description": "Prefix to add to all resources created by this solution. To not use any prefix value, you can enter the string `__NULL__`."
+              "description": "The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To not use any prefix value, you can enter the string `__NULL__`."
             },
             {
-              "key": "resource_group_name",
-              "required": true
+              "key": "existing_resource_group_name",
+              "required": true,
+              "custom_config": {
+                "type": "resource_group",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "identifier": "rg_name"
+                }
+              }
             },
             {
               "key": "existing_subnet_id",

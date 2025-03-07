@@ -19,9 +19,9 @@ variable "provider_visibility" {
   }
 }
 
-variable "resource_group_name" {
+variable "existing_resource_group_name" {
   type        = string
-  description = "The name of an existing resource group in which to provision the private path services in.  If a `prefix` input variable is specified, it is added to this name in the `<prefix>-value` format."
+  description = "The name of an existing resource group in which to provision the private path services in."
 }
 
 variable "region" {
@@ -32,8 +32,8 @@ variable "region" {
 
 variable "prefix" {
   type        = string
-  description = "(Optional) Prefix to add to all resources created by this solution. To not use any prefix value, you can set this value to `null` or an empty string."
-  default     = "dev"
+  description = "The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To not use any prefix value, you can set this value to `null` or an empty string."
+  nullable    = true
   validation {
     condition = (var.prefix == null ? true :
       alltrue([

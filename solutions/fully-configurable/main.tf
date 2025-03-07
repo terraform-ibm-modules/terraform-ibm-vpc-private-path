@@ -5,7 +5,7 @@
 module "resource_group" {
   source                       = "terraform-ibm-modules/resource-group/ibm"
   version                      = "1.1.6"
-  existing_resource_group_name = var.resource_group_name
+  existing_resource_group_name = var.existing_resource_group_name
 }
 
 locals {
