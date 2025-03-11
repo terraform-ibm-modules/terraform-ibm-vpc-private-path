@@ -133,6 +133,35 @@
               }
             },
             {
+              "key": "private_path_name"
+            },
+            {
+              "key": "private_path_default_access_policy",
+              "options": [
+                {
+                  "displayname": "Review",
+                  "value": "review"
+                },
+                {
+                  "displayname": "Permit",
+                  "value": "permit"
+                },
+                {
+                  "displayname": "Deny",
+                  "value": "deny"
+                }
+              ]
+            },
+            {
+              "key": "private_path_publish"
+            },
+            {
+              "key": "private_path_zonal_affinity"
+            },
+            {
+              "key": "private_path_account_policies"
+            },
+            {
               "key": "network_loadbalancer_name"
             },
             {
@@ -194,35 +223,6 @@
             },
             {
               "key": "network_loadbalancer_pool_member_port"
-            },
-            {
-              "key": "private_path_name"
-            },
-            {
-              "key": "private_path_default_access_policy",
-              "options": [
-                {
-                  "displayname": "Review",
-                  "value": "review"
-                },
-                {
-                  "displayname": "Permit",
-                  "value": "permit"
-                },
-                {
-                  "displayname": "Deny",
-                  "value": "deny"
-                }
-              ]
-            },
-            {
-              "key": "private_path_publish"
-            },
-            {
-              "key": "private_path_zonal_affinity"
-            },
-            {
-              "key": "private_path_account_policies"
             }
           ],
           "architecture": {
