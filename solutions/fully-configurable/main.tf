@@ -9,7 +9,7 @@ module "resource_group" {
 }
 
 locals {
-  prefix                    = (var.prefix != null && trimspace(var.prefix) != "" ? "${var.prefix}-" : "")
+  prefix                    = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
   network_loadbalancer_name = "${local.prefix}${var.network_loadbalancer_name}"
   private_path_name         = "${local.prefix}${var.private_path_name}"
 }
