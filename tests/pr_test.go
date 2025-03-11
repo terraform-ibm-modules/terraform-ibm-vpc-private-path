@@ -22,7 +22,7 @@ const resourceGroup = "geretain-test-resources"
 
 // Ensure every example directory has a corresponding test
 const advancedExampleDir = "examples/advanced"
-const standardFlavorDir = "solutions/standard"
+const fullyConfigurableTerraformDir = "solutions/fully-configurable"
 
 func setupOptions(t *testing.T, prefix string, dir string) *testhelper.TestOptions {
 	options := testhelper.TestOptionsDefaultWithVars(&testhelper.TestOptions{
@@ -56,7 +56,7 @@ func TestRunUpgradeExample(t *testing.T) {
 	}
 }
 
-func TestStandardSolutionInSchematics(t *testing.T) {
+func TestRunFullyConfigurableInSchematics(t *testing.T) {
 	t.Parallel()
 	// ------------------------------------------------------------------------------------------------------
 	// Create VPC, resource group first
@@ -99,11 +99,11 @@ func TestStandardSolutionInSchematics(t *testing.T) {
 			Testing: t,
 			Prefix:  prefix,
 			TarIncludePatterns: []string{
-				standardFlavorDir + "/*.*",
+				fullyConfigurableTerraformDir + "/*.*",
 				"*.tf",
 			},
 			ResourceGroup:          terraform.Output(t, existingTerraformOptions, "resource_group_name"),
-			TemplateFolder:         standardFlavorDir,
+			TemplateFolder:         fullyConfigurableTerraformDir,
 			Tags:                   []string{"test-schematic"},
 			DeleteWorkspaceOnFail:  false,
 			WaitJobCompleteMinutes: 60,
