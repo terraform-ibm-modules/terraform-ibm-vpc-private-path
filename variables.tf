@@ -46,8 +46,8 @@ variable "nlb_name" {
 
 variable "nlb_listener_port" {
   type        = number
-  description = "The listener port for the private path netwrok load balancer."
-  default     = 3120
+  description = "The listener port for the private path netwrok load balancer. Default value is set to port 80."
+  default     = 80
 }
 
 variable "nlb_listener_accept_proxy_protocol" {
@@ -107,15 +107,15 @@ variable "nlb_pool_health_monitor_url" {
 variable "nlb_pool_health_monitor_port" {
   type        = number
   description = "The port on which the load balancer sends health check requests. By default, health checks are sent on the same port where traffic is sent to the instance."
-  default     = null
+  default     = 80
 }
 
 variable "nlb_pool_member_port" {
   type        = number
-  description = "The port where traffic is sent to the instance."
-  default     = null
+  description = "The port where traffic is sent to the instance. Default value is set to port 80."
+  default     = 80
   validation {
-    condition     = length(var.nlb_pool_member_instance_ids) != 0 ? var.nlb_pool_member_port == null ? false : true : true
+    condition     = length(var.nlb_pool_member_instance_ids) != 0 ? var.nlb_pool_member_port == 0 ? false : true : true
     error_message = "A value should be set for `nlb_pool_member_port` when you have instances attached to the backend pool."
   }
 }
