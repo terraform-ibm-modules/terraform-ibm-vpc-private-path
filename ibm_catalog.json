@@ -42,18 +42,6 @@
           "name": "fully-configurable",
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
-          "dependency_version_2": true,
-          "dependencies": [
-            {
-              "flavors": [
-                "standard"
-              ],
-              "id": "9fc0fa64-27af-4fed-9dce-47b3640ba739-global",
-              "name": "deploy-arch-ibm-slz-vpc",
-              "version": ">=v4.4.7",
-              "optional": true
-            }
-          ],
           "configuration": [
             {
               "key": "ibmcloud_api_key"
@@ -243,7 +231,7 @@
             }
           ],
           "architecture": {
-            "descriptions": "",
+            "descriptions": "This architecture creates a fully-configurable vpc private path.",
             "features": [
               {
                 "title": "Creates a Private Path service.",
@@ -264,7 +252,39 @@
                 "description": "This architecture supports creating and configuring IBM VPC Private path service."
               }
             ]
-          }
+          },
+          "dependencies": [
+            {
+                "name": "deploy-arch-ibm-account-infra-base",
+                "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
+                "flavors": [
+                    "standard"
+                ],
+                "id": "63641cec-6093-4b4f-b7b0-98d2f4185cd6-global",
+                "ignore_auto_referencing": [
+                    "*"
+                ],
+                "input_mapping": [
+                    {
+                        "dependency_output": "workload_resource_group_name",
+                        "version_input": "resource_group_name"
+                    },
+                    {
+                        "dependency_input": "prefix",
+                        "version_input": "prefix",
+                        "reference_version": true
+                    },
+                    {
+                        "version_input": "use_existing_resource_group",
+                        "value": true
+                    }
+                ],
+                "optional": true,
+                "on_by_default": true,
+                "version": "^v1.18.0"
+            }
+        ],
+        "dependency_version_2": true
         }
       ]
     }
