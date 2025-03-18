@@ -252,8 +252,7 @@
                 "description": "This architecture supports creating and configuring IBM VPC Private path service."
               }
             ]
-          },
-          "dependency_version_2": true
+          }
         }
       ]
     }
