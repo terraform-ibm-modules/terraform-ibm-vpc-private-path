@@ -20,7 +20,7 @@ The `private_path_account_policies` input variable allows you to provide a list 
 ### Example Private Path Account policies Configuration
 
 ```hcl
-private_path_account_policies = [
+[
   {
     account        = "gtf640basntrds7fc2b1p6thah78g36h"
     access_policy  = "review"

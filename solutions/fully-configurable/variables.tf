@@ -22,6 +22,7 @@ variable "provider_visibility" {
 variable "existing_resource_group_name" {
   type        = string
   description = "The name of an existing resource group in which to provision the private path services in."
+  default     = "Default"
 }
 
 variable "region" {
