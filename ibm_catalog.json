@@ -246,7 +246,7 @@
               {
                 "diagram": {
                   "caption": "Private Path",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-mq-operator/main/reference-architecture/private-path.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/reference-architecture/private-path.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture supports creating and configuring IBM VPC Private path service."
