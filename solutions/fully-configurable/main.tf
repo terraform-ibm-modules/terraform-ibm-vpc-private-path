@@ -25,7 +25,7 @@ module "private_path" {
   resource_group_id                  = module.resource_group.resource_group_id
   subnet_id                          = local.subnet_id
   tags                               = var.private_path_tags
-  access_tags                        = var.access_tags
+  access_tags                        = var.private_path_access_tags
   nlb_name                           = local.network_loadbalancer_name
   nlb_listener_port                  = var.network_loadbalancer_listener_port
   nlb_listener_accept_proxy_protocol = var.network_loadbalancer_listener_accept_proxy_protocol

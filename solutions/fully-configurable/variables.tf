@@ -52,7 +52,7 @@ variable "private_path_tags" {
   default     = []
 }
 
-variable "access_tags" {
+variable "private_path_access_tags" {
   type        = list(string)
   description = "A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details"
   default     = []

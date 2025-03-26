@@ -83,7 +83,7 @@
                 "grouping": "deployment",
                 "original_grouping": "deployment",
                 "config_constraints": {
-                  "type": "id"
+                 "valueType": "id"
                 },
                 "associations": {
                   "parameters": [
@@ -148,7 +148,7 @@
               }
             },
             {
-              "key": "access_tags",
+              "key": "private_path_access_tags",
               "custom_config": {
                 "grouping": "deployment",
                 "original_grouping": "deployment",
