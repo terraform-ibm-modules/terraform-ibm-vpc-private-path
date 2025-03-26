@@ -83,7 +83,7 @@
                 "grouping": "deployment",
                 "original_grouping": "deployment",
                 "config_constraints": {
-                 "valueType": "id"
+                  "valueType": "id"
                 },
                 "associations": {
                   "parameters": [
@@ -314,6 +314,10 @@
                   "dependency_input": "existing_resource_group_name",
                   "version_input": "existing_resource_group_name",
                   "reference_version": true
+                },
+                {
+                  "dependency_output": "vpc_id",
+                  "version_input": "existing_vpc_id"
                 }
               ]
             }
