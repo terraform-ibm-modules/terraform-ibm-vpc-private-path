@@ -29,15 +29,17 @@ This solution supports provisioning and configuring the following infrastructure
 
 ### Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_is_vpc.vpc](https://registry.terraform.io/providers/ibm-cloud/ibm/1.75.0/docs/data-sources/is_vpc) | data source |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details | `list(string)` | `[]` | no |
 | <a name="input_existing_resource_group_name"></a> [existing\_resource\_group\_name](#input\_existing\_resource\_group\_name) | The name of an existing resource group in which to provision the private path services in. | `string` | `"Default"` | no |
-| <a name="input_existing_subnet_id"></a> [existing\_subnet\_id](#input\_existing\_subnet\_id) | An existing subnet id. | `string` | n/a | yes |
+| <a name="input_existing_subnet_id"></a> [existing\_subnet\_id](#input\_existing\_subnet\_id) | The ID of an existing subnet. | `string` | `null` | no |
+| <a name="input_existing_vpc_id"></a> [existing\_vpc\_id](#input\_existing\_vpc\_id) | The ID of an existing VPC. If the user provides only the `existing_vpc_id` the private path service will be provisioned in the first subnet. | `string` | `null` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The API key to use for IBM Cloud. | `string` | n/a | yes |
 | <a name="input_network_loadbalancer_listener_accept_proxy_protocol"></a> [network\_loadbalancer\_listener\_accept\_proxy\_protocol](#input\_network\_loadbalancer\_listener\_accept\_proxy\_protocol) | If set to true, listener forwards proxy protocol information that are supported by load balancers in the application family. Default value is false. | `bool` | `false` | no |
 | <a name="input_network_loadbalancer_listener_port"></a> [network\_loadbalancer\_listener\_port](#input\_network\_loadbalancer\_listener\_port) | The listener port for the private path netwrok load balancer. | `number` | `80` | no |
@@ -52,6 +54,7 @@ No resources.
 | <a name="input_network_loadbalancer_pool_member_instance_ids"></a> [network\_loadbalancer\_pool\_member\_instance\_ids](#input\_network\_loadbalancer\_pool\_member\_instance\_ids) | The list of instance ids that you want to attach to the back-end pool. | `list(string)` | `[]` | no |
 | <a name="input_network_loadbalancer_pool_member_port"></a> [network\_loadbalancer\_pool\_member\_port](#input\_network\_loadbalancer\_pool\_member\_port) | The port where traffic is sent to the instance. | `number` | `80` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To not use any prefix value, you can set this value to `null` or an empty string. | `string` | n/a | yes |
+| <a name="input_private_path_access_tags"></a> [private\_path\_access\_tags](#input\_private\_path\_access\_tags) | A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details | `list(string)` | `[]` | no |
 | <a name="input_private_path_account_policies"></a> [private\_path\_account\_policies](#input\_private\_path\_account\_policies) | The account-specific connection request policies. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/standard/DA-types.md). | <pre>list(object({<br/>    account       = string<br/>    access_policy = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_private_path_default_access_policy"></a> [private\_path\_default\_access\_policy](#input\_private\_path\_default\_access\_policy) | The policy to use for bindings from accounts without an explicit account policy. The default policy is set to Review all requests. Supported options are `permit`, `deny`, or `review`. | `string` | `"review"` | no |
 | <a name="input_private_path_name"></a> [private\_path\_name](#input\_private\_path\_name) | The name of the Private Path service for VPC. | `string` | `"private-path"` | no |

@@ -76,6 +76,26 @@
               }
             },
             {
+              "key": "existing_vpc_id",
+              "required": true,
+              "custom_config": {
+                "type": "vpc",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                 "valueType": "id"
+                },
+                "associations": {
+                  "parameters": [
+                    {
+                      "name": "region",
+                      "optionsRefresh": true
+                    }
+                  ]
+                }
+              }
+            },
+            {
               "key": "existing_subnet_id",
               "required": true,
               "custom_config": {
@@ -128,7 +148,7 @@
               }
             },
             {
-              "key": "access_tags",
+              "key": "private_path_access_tags",
               "custom_config": {
                 "grouping": "deployment",
                 "original_grouping": "deployment",

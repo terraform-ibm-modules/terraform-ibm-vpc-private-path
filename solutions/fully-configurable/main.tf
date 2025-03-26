@@ -12,14 +12,20 @@ locals {
   prefix                    = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
   network_loadbalancer_name = "${local.prefix}${var.network_loadbalancer_name}"
   private_path_name         = "${local.prefix}${var.private_path_name}"
+  subnet_id                 = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc[0].subnets[0].id
+}
+
+data "ibm_is_vpc" "vpc" {
+  count      = var.existing_vpc_id != null && var.existing_subnet_id == null ? 1 : 0
+  identifier = var.existing_vpc_id
 }
 
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
-  subnet_id                          = var.existing_subnet_id
+  subnet_id                          = local.subnet_id
   tags                               = var.private_path_tags
-  access_tags                        = var.access_tags
+  access_tags                        = var.private_path_access_tags
   nlb_name                           = local.network_loadbalancer_name
   nlb_listener_port                  = var.network_loadbalancer_listener_port
   nlb_listener_accept_proxy_protocol = var.network_loadbalancer_listener_accept_proxy_protocol
