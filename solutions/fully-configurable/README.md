@@ -29,7 +29,9 @@ This solution supports provisioning and configuring the following infrastructure
 
 ### Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_is_vpc.vpc](https://registry.terraform.io/providers/ibm-cloud/ibm/1.75.0/docs/data-sources/is_vpc) | data source |
 
 ### Inputs
 
@@ -37,7 +39,8 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details | `list(string)` | `[]` | no |
 | <a name="input_existing_resource_group_name"></a> [existing\_resource\_group\_name](#input\_existing\_resource\_group\_name) | The name of an existing resource group in which to provision the private path services in. | `string` | `"Default"` | no |
-| <a name="input_existing_subnet_id"></a> [existing\_subnet\_id](#input\_existing\_subnet\_id) | An existing subnet id. | `string` | n/a | yes |
+| <a name="input_existing_subnet_id"></a> [existing\_subnet\_id](#input\_existing\_subnet\_id) | The ID of an existing subnet. | `string` | `null` | no |
+| <a name="input_existing_vpc_id"></a> [existing\_vpc\_id](#input\_existing\_vpc\_id) | The ID of an existing VPC. If the user provides only the `existing_vpc_id` the private path service will be provisioned in the first subnet. | `string` | `null` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | The API key to use for IBM Cloud. | `string` | n/a | yes |
 | <a name="input_network_loadbalancer_listener_accept_proxy_protocol"></a> [network\_loadbalancer\_listener\_accept\_proxy\_protocol](#input\_network\_loadbalancer\_listener\_accept\_proxy\_protocol) | If set to true, listener forwards proxy protocol information that are supported by load balancers in the application family. Default value is false. | `bool` | `false` | no |
 | <a name="input_network_loadbalancer_listener_port"></a> [network\_loadbalancer\_listener\_port](#input\_network\_loadbalancer\_listener\_port) | The listener port for the private path netwrok load balancer. | `number` | `80` | no |
