@@ -82,9 +82,6 @@
                 "type": "vpc",
                 "grouping": "deployment",
                 "original_grouping": "deployment",
-                "config_constraints": {
-                 "valueType": "id"
-                },
                 "associations": {
                   "parameters": [
                     {
@@ -148,7 +145,7 @@
               }
             },
             {
-              "key": "private_path_access_tags",
+              "key": "access_tags",
               "custom_config": {
                 "grouping": "deployment",
                 "original_grouping": "deployment",
@@ -266,7 +263,7 @@
               {
                 "diagram": {
                   "caption": "Private Path",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/reference-architecture/private-path.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-mq-operator/main/reference-architecture/private-path.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture supports creating and configuring IBM VPC Private path service."
