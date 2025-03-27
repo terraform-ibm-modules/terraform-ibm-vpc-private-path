@@ -63,7 +63,7 @@ This solution supports provisioning and configuring the following infrastructure
 | <a name="input_private_path_tags"></a> [private\_path\_tags](#input\_private\_path\_tags) | Optional list of tags to be added to the private path service. | `list(string)` | `[]` | no |
 | <a name="input_private_path_zonal_affinity"></a> [private\_path\_zonal\_affinity](#input\_private\_path\_zonal\_affinity) | When enabled, the endpoint service preferentially permits connection requests from endpoints in the same zone. Without zonal affinity, requests are distributed to all instances in any zone. | `bool` | `false` | no |
 | <a name="input_provider_visibility"></a> [provider\_visibility](#input\_provider\_visibility) | Set the visibility value for the IBM terraform provider. Supported values are `public`, `private`, `public-and-private`. [Learn more](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/guides/custom-service-endpoints). | `string` | `"private"` | no |
-| <a name="input_region"></a> [region](#input\_region) | The region in which the VPC resources are provisioned. | `string` | `"us-south"` | no |
+| <a name="input_region"></a> [region](#input\_region) | The region in which the VPC resources are provisioned. | `string` | n/a | yes |
 
 ### Outputs
 

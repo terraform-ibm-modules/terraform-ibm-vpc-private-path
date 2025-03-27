@@ -42,6 +42,15 @@
           "name": "fully-configurable",
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
+          "compliance": {
+            "authority": "scc-v3",
+            "profiles": [
+              {
+                "profile_name": "IBM Cloud Framework for Financial Services",
+                "profile_version": "1.7.0"
+              }
+            ]
+          },
           "configuration": [
             {
               "key": "ibmcloud_api_key"
@@ -76,24 +85,7 @@
               }
             },
             {
-              "key": "existing_vpc_id",
-              "required": true,
-              "custom_config": {
-                "type": "vpc",
-                "grouping": "deployment",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "valueType": "id"
-                },
-                "associations": {
-                  "parameters": [
-                    {
-                      "name": "region",
-                      "optionsRefresh": true
-                    }
-                  ]
-                }
-              }
+              "key": "existing_vpc_id"
             },
             {
               "key": "existing_subnet_id",
@@ -266,7 +258,7 @@
               {
                 "diagram": {
                   "caption": "Private Path",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/reference-architecture/private-path.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-mq-operator/main/reference-architecture/private-path.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "This architecture supports creating and configuring IBM VPC Private path service."
@@ -298,7 +290,7 @@
             {
               "name": "deploy-arch-ibm-vpc",
               "id": "2af61763-f8ef-4527-a815-b92166f29bc8",
-              "version": "^v1.0.2",
+              "version": "^v7.21.0",
               "flavors": ["fully-configurable"],
               "catalog_id": "f64499c8-eb50-4985-bf91-29f9e605a433",
               "optional": true,
