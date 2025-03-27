@@ -28,7 +28,6 @@ variable "existing_resource_group_name" {
 variable "region" {
   type        = string
   description = "The region in which the VPC resources are provisioned."
-  default     = "us-south"
 }
 
 variable "prefix" {
