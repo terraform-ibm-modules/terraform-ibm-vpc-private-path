@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "deploy-arch-ibm-is-private-path-service-gateway",
-      "label": "Cloud automation for VPC Private Path",
+      "label": "[Add-ons Beta] Cloud automation for VPC Private Path",
       "product_kind": "solution",
       "tags": [
         "ibm_created",
