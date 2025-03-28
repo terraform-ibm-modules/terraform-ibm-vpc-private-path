@@ -1,10 +1,10 @@
 ---
 apiVersion: v1
 offerings:
-  - name: deploy-arch-ibm-vpc-private-path
+  - name: deploy-arch-ibm-is-private-path-service-gateway
     kind: solution
     catalog_id: 7df1e4ca-d54c-4fd0-82ce-3d13247308cd
-    offering_id: 33661c6a-d71f-4ed8-ace0-878236e8520e
+    offering_id: e9e6f437-fe01-454a-9e53-105fc651d7c0
     variations:
       - name: fully-configurable
         mark_ready: true
@@ -14,3 +14,4 @@ offerings:
         scc:
           instance_id: 1c7d5f78-9262-44c3-b779-b28fe4d88c37
           region: us-south
+          scope_resource_group_var_name: existing_resource_group_name
