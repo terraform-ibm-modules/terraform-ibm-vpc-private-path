@@ -104,7 +104,7 @@ variable "network_loadbalancer_backend_pools" {
     listener_accept_proxy_protocol           = optional(bool, false)
   }))
   default     = []
-  description = "A list describing backend pools for the private path network load balancer."
+  description = "A list describing backend pools for the private path network load balancer. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/fully-configurable/DA_inputs.md#options-with-backend-pools)."
 }
 
 ##############################################################################
@@ -145,6 +145,6 @@ variable "private_path_account_policies" {
     account       = string
     access_policy = string
   }))
-  description = "The account-specific connection request policies. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/standard/DA-types.md)."
+  description = "The account-specific connection request policies. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/fully-configurable/DA_inputs.md#options-with-acc-policies)."
   default     = []
 }
