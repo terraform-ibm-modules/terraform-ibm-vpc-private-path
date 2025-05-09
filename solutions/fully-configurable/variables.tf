@@ -87,70 +87,24 @@ variable "network_loadbalancer_name" {
   default     = "pp-nlb"
 }
 
-variable "network_loadbalancer_listener_port" {
-  type        = number
-  description = "The listener port for the private path netwrok load balancer."
-  default     = 80
-}
-
-variable "network_loadbalancer_listener_accept_proxy_protocol" {
-  type        = bool
-  description = "If set to true, listener forwards proxy protocol information that are supported by load balancers in the application family. Default value is false."
-  default     = false
-}
-
-variable "network_loadbalancer_pool_algorithm" {
-  type        = string
-  description = "The load-balancing algorithm for private path netwrok load balancer pool members. Supported values are `round_robin` or `weighted_round_robin`."
-  default     = "round_robin"
-}
-
-variable "network_loadbalancer_pool_health_delay" {
-  type        = number
-  description = "The interval between 2 consecutive health check attempts. The default is 5 seconds. Interval must be greater than `network_loadbalancer_pool_health_timeout` value."
-  default     = 5
-}
-
-variable "network_loadbalancer_pool_health_retries" {
-  type        = number
-  description = "The maximum number of health check attempts made before an instance is declared unhealthy. The default is 2 failed health checks."
-  default     = 2
-}
-
-variable "network_loadbalancer_pool_health_timeout" {
-  type        = number
-  description = "The maximum time the system waits for a response from a health check request. The default is 2 seconds."
-  default     = 2
-}
-
-variable "network_loadbalancer_pool_health_type" {
-  type        = string
-  description = "The protocol used to send health check messages to instances in the pool. Supported values are `tcp` or `http`."
-  default     = "tcp"
-}
-
-variable "network_loadbalancer_pool_health_monitor_url" {
-  type        = string
-  description = "If you select HTTP as the health check protocol, this URL is used to send health check requests to the instances in the pool. By default, this is the root path `/`"
-  default     = "/"
-}
-
-variable "network_loadbalancer_pool_health_monitor_port" {
-  type        = number
-  description = "The port on which the load balancer sends health check requests. By default, health checks are sent on the same port where traffic is sent to the instance."
-  default     = 80
-}
-
-variable "network_loadbalancer_pool_member_port" {
-  type        = number
-  description = "The port where traffic is sent to the instance."
-  default     = 80
-}
-
-variable "network_loadbalancer_pool_member_instance_ids" {
-  type        = list(string)
-  description = "The list of instance ids that you want to attach to the back-end pool."
+variable "network_loadbalancer_backend_pools" {
+  type = list(object({
+    pool_name                                = string
+    pool_algorithm                           = optional(string, "round_robin")
+    pool_health_delay                        = optional(number, 5)
+    pool_health_retries                      = optional(number, 2)
+    pool_health_timeout                      = optional(number, 2)
+    pool_health_type                         = optional(string, "tcp")
+    pool_health_monitor_url                  = optional(string, "/")
+    pool_health_monitor_port                 = optional(number, 80)
+    pool_member_port                         = optional(number)
+    pool_member_instance_ids                 = optional(list(string), [])
+    pool_member_application_load_balancer_id = optional(string)
+    listener_port                            = optional(number)
+    listener_accept_proxy_protocol           = optional(bool, false)
+  }))
   default     = []
+  description = "A list describing backend pools for the private path network load balancer."
 }
 
 ##############################################################################

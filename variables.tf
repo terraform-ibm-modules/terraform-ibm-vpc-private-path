@@ -44,86 +44,75 @@ variable "nlb_name" {
   default     = "pp-nlb"
 }
 
-variable "nlb_listener_port" {
-  type        = number
-  description = "The listener port for the private path netwrok load balancer. Default value is set to port 80."
-  default     = 80
-}
+variable "nlb_backend_pools" {
+  type = list(object({
+    pool_name                                = string
+    pool_algorithm                           = optional(string, "round_robin")
+    pool_health_delay                        = optional(number, 5)
+    pool_health_retries                      = optional(number, 2)
+    pool_health_timeout                      = optional(number, 2)
+    pool_health_type                         = optional(string, "tcp")
+    pool_health_monitor_url                  = optional(string, "/")
+    pool_health_monitor_port                 = optional(number, 80)
+    pool_member_port                         = optional(number)
+    pool_member_instance_ids                 = optional(list(string), [])
+    pool_member_application_load_balancer_id = optional(string)
+    listener_port                            = optional(number)
+    listener_accept_proxy_protocol           = optional(bool, false)
+  }))
+  default     = []
+  description = "A list describing backend pools for the private path network load balancer."
 
-variable "nlb_listener_accept_proxy_protocol" {
-  type        = bool
-  description = "If set to true, listener forwards proxy protocol information that are supported by load balancers in the application family. Default value is false."
-  default     = false
-}
-
-variable "nlb_pool_algorithm" {
-  type        = string
-  description = "The load-balancing algorithm for private path netwrok load balancer pool members. Supported values are `round_robin` or `weighted_round_robin`."
-  default     = "round_robin"
   validation {
-    condition     = contains(["round_robin", "weighted_round_robin"], var.nlb_pool_algorithm)
+    condition = length(
+      flatten(
+        [
+          for backend in var.nlb_backend_pools :
+          true if contains(["tcp", "http"], backend.pool_health_type)
+        ]
+      )
+    ) == length(flatten([for backend in var.nlb_backend_pools : true]))
+    error_message = "Backend pool health type values can only be `tcp` or `http`."
+  }
+
+  validation {
+    condition = length(
+      flatten(
+        [
+          for backend in var.nlb_backend_pools :
+          true if backend.pool_health_delay > backend.pool_health_timeout
+        ]
+      )
+    ) == length(flatten([for backend in var.nlb_backend_pools : true]))
+    error_message = "`pool_health_delay` must be greater than `pool_health_timeout` value."
+  }
+
+  validation {
+    condition = length(
+      flatten(
+        [
+          for backend in var.nlb_backend_pools :
+          true if contains(["round_robin", "weighted_round_robin"], backend.pool_algorithm)
+        ]
+      )
+    ) == length(flatten([for backend in var.nlb_backend_pools : true]))
     error_message = "Supported values are `round_robin` or `weighted_round_robin`."
   }
-}
 
-variable "nlb_pool_health_delay" {
-  type        = number
-  description = "The interval between 2 consecutive health check attempts. The default is 5 seconds. Interval must be greater than `nlb_pool_health_timeout` value."
-  default     = 5
   validation {
-    condition     = var.nlb_pool_health_delay > var.nlb_pool_health_timeout
-    error_message = "`nlb_pool_health_delay` must be greater than `nlb_pool_health_timeout` value."
+    condition     = length(distinct([for backend in var.nlb_backend_pools : backend.listener_port])) == length([for backend in var.nlb_backend_pools : backend.listener_port])
+    error_message = "`listener_port` for each backend pool should be unique number."
   }
-}
 
-variable "nlb_pool_health_retries" {
-  type        = number
-  description = "The maximum number of health check attempts made before an instance is declared unhealthy. The default is 2 failed health checks."
-  default     = 2
-}
-
-variable "nlb_pool_health_timeout" {
-  type        = number
-  description = "The maximum time the system waits for a response from a health check request. The default is 2 seconds."
-  default     = 2
-}
-
-variable "nlb_pool_health_type" {
-  type        = string
-  description = "The protocol used to send health check messages to instances in the pool. Supported values are `tcp` or `http`."
-  default     = "tcp"
   validation {
-    condition     = contains(["tcp", "http"], var.nlb_pool_health_type)
-    error_message = "Supported values are `tcp` or `http`."
+    condition     = length(distinct([for backend in var.nlb_backend_pools : backend.pool_name])) == length([for backend in var.nlb_backend_pools : backend.pool_name])
+    error_message = "`pool_name` for each backend pool should be unique value."
   }
-}
 
-variable "nlb_pool_health_monitor_url" {
-  type        = string
-  description = "If you select HTTP as the health check protocol, this URL is used to send health check requests to the instances in the pool. By default, this is the root path `/`"
-  default     = "/"
-}
-
-variable "nlb_pool_health_monitor_port" {
-  type        = number
-  description = "The port on which the load balancer sends health check requests. By default, health checks are sent on the same port where traffic is sent to the instance."
-  default     = 80
-}
-
-variable "nlb_pool_member_port" {
-  type        = number
-  description = "The port where traffic is sent to the instance. Default value is set to port 80."
-  default     = 80
   validation {
-    condition     = length(var.nlb_pool_member_instance_ids) != 0 ? var.nlb_pool_member_port == 0 ? false : true : true
-    error_message = "A value should be set for `nlb_pool_member_port` when you have instances attached to the backend pool."
+    condition     = length([for backend in var.nlb_backend_pools : backend]) <= 10
+    error_message = "You cannot define more than 10 backend pools."
   }
-}
-
-variable "nlb_pool_member_instance_ids" {
-  type        = list(string)
-  description = "The list of instance ids that you want to attach to the back-end pool."
-  default     = []
 }
 
 ##############################################################################
