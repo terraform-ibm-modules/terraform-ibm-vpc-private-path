@@ -69,13 +69,6 @@ resource "ibm_is_instance" "vsi" {
   user_data = file("./userdata.sh")
 }
 
-resource "ibm_is_lb" "alb" {
-  name           = "${var.prefix}-load-balancer"
-  resource_group = module.resource_group.resource_group_id
-  subnets        = [ibm_is_subnet.provider_subnet.id]
-  type           = "private"
-}
-
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
