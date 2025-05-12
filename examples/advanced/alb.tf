@@ -61,3 +61,11 @@ resource "ibm_is_lb_pool" "alb_backend_pool" {
   health_timeout = 30
   health_type    = "http"
 }
+
+resource "ibm_is_lb_pool_member" "alb_pool_members" {
+  count     = 2
+  port      = 80
+  lb        = ibm_is_lb.alb.id
+  pool      = element(split("/", ibm_is_lb_pool.alb_backend_pool.pool_id), 1)
+  target_id = ibm_is_instance.vsi[count.index].id
+}
