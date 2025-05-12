@@ -44,7 +44,14 @@ resource "ibm_is_instance" "alb_vsi" {
   user_data = file("./userdata.sh")
 }
 
+resource "time_sleep" "wait_for_subnet" {
+  depends_on = [ibm_is_subnet.alb_subnet]
+
+  create_duration = "60s"
+}
+
 resource "ibm_is_lb" "alb" {
+  depends_on     = [time_sleep.wait_for_subnet]
   name           = "${var.prefix}-load-balancer"
   resource_group = module.resource_group.resource_group_id
   subnets        = [ibm_is_subnet.alb_subnet.id]
