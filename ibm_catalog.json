@@ -185,7 +185,6 @@
             }
           ],
           "architecture": {
-            "descriptions": "This architecture creates a fully-configurable vpc private path.",
             "features": [
               {
                 "title": "Creates a Private Path service.",
