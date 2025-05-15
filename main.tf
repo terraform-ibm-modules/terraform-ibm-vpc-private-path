@@ -62,7 +62,7 @@ locals {
   ))...)
 }
 
-resource "ibm_is_lb_pool_member" "pool_members" {
+resource "ibm_is_lb_pool_member" "nlb_pool_members" {
   for_each  = local.pool_members
   port      = each.value.pool_member_port
   lb        = ibm_is_lb.ppnlb.id
@@ -84,7 +84,7 @@ resource "ibm_is_lb_listener" "listener" {
   port_max              = each.value.listener_port
   protocol              = "tcp"
   accept_proxy_protocol = each.value.listener_accept_proxy_protocol
-  depends_on            = [ibm_is_lb_pool_member.pool_members]
+  depends_on            = [ibm_is_lb_pool_member.nlb_pool_members]
 }
 
 ##############################################################################

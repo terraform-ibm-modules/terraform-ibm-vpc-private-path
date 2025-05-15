@@ -19,7 +19,7 @@ output "pool_id" {
 
 output "pool_member_id" {
   description = "The unique identifier of the load balancer pool member."
-  value = { for key, value in ibm_is_lb_pool_member.pool_members :
+  value = { for key, value in ibm_is_lb_pool_member.nlb_pool_members :
   key => value.id }
 }
 
