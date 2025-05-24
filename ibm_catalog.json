@@ -181,64 +181,7 @@
               "key": "network_loadbalancer_name"
             },
             {
-              "key": "network_loadbalancer_listener_accept_proxy_protocol"
-            },
-            {
-              "key": "network_loadbalancer_listener_port"
-            },
-            {
-              "key": "network_loadbalancer_pool_algorithm",
-              "options": [
-                {
-                  "displayname": "round_robin",
-                  "value": "round_robin"
-                },
-                {
-                  "displayname": "weighted_round_robin",
-                  "value": "weighted_round_robin"
-                }
-              ]
-            },
-            {
-              "key": "network_loadbalancer_pool_health_delay"
-            },
-            {
-              "key": "network_loadbalancer_pool_health_monitor_port"
-            },
-            {
-              "key": "network_loadbalancer_pool_health_monitor_url"
-            },
-            {
-              "key": "network_loadbalancer_pool_health_retries"
-            },
-            {
-              "key": "network_loadbalancer_pool_health_timeout"
-            },
-            {
-              "key": "network_loadbalancer_pool_health_type",
-              "options": [
-                {
-                  "displayname": "TCP",
-                  "value": "tcp"
-                },
-                {
-                  "displayname": "HTTP",
-                  "value": "http"
-                }
-              ]
-            },
-            {
-              "key": "network_loadbalancer_pool_member_instance_ids",
-              "custom_config": {
-                "grouping": "deployment",
-                "original_grouping": "deployment",
-                "config_constraints": {
-                  "type": "string"
-                }
-              }
-            },
-            {
-              "key": "network_loadbalancer_pool_member_port"
+              "key": "network_loadbalancer_backend_pools"
             }
           ],
           "architecture": {
