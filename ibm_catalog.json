@@ -45,12 +45,12 @@
           "compliance": {
             "authority": "scc-v3",
             "profiles": [
-                {
-                    "profile_name": "IBM Cloud Framework for Financial Services",
-                    "profile_version": "1.7.0"
-                }
+              {
+                "profile_name": "IBM Cloud Framework for Financial Services",
+                "profile_version": "1.7.0"
+              }
             ]
-        },
+          },
           "configuration": [
             {
               "key": "ibmcloud_api_key"
@@ -69,8 +69,7 @@
             },
             {
               "key": "prefix",
-              "required": true,
-              "description": "The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To not use any prefix value, you can enter the string `__NULL__`."
+              "required": true
             },
             {
               "key": "existing_resource_group_name",
@@ -243,7 +242,6 @@
             }
           ],
           "architecture": {
-            "descriptions": "This architecture creates a fully-configurable vpc private path.",
             "features": [
               {
                 "title": "Creates a Private Path service.",
