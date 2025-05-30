@@ -64,38 +64,17 @@ variable "nlb_backend_pools" {
   description = "A list describing backend pools for the private path network load balancer."
 
   validation {
-    condition = length(
-      flatten(
-        [
-          for backend in var.nlb_backend_pools :
-          true if contains(["tcp", "http"], backend.pool_health_type)
-        ]
-      )
-    ) == length(flatten([for backend in var.nlb_backend_pools : true]))
+    condition     = alltrue([for backend in var.nlb_backend_pools : contains(["tcp", "http"], backend.pool_health_type)])
     error_message = "Backend pool health type values can only be `tcp` or `http`."
   }
 
   validation {
-    condition = length(
-      flatten(
-        [
-          for backend in var.nlb_backend_pools :
-          true if backend.pool_health_delay > backend.pool_health_timeout
-        ]
-      )
-    ) == length(flatten([for backend in var.nlb_backend_pools : true]))
+    condition     = alltrue([for backend in var.nlb_backend_pools : backend.pool_health_delay > backend.pool_health_timeout])
     error_message = "`pool_health_delay` must be greater than `pool_health_timeout` value."
   }
 
   validation {
-    condition = length(
-      flatten(
-        [
-          for backend in var.nlb_backend_pools :
-          true if contains(["round_robin", "weighted_round_robin"], backend.pool_algorithm)
-        ]
-      )
-    ) == length(flatten([for backend in var.nlb_backend_pools : true]))
+    condition     = alltrue([for backend in var.nlb_backend_pools : contains(["round_robin", "weighted_round_robin"], backend.pool_algorithm)])
     error_message = "Supported values are `round_robin` or `weighted_round_robin`."
   }
 
@@ -164,7 +143,7 @@ variable "private_path_account_policies" {
   description = "The account-specific connection request policies."
   default     = []
   validation {
-    condition     = length([for policy in flatten(var.private_path_account_policies) : true if policy.access_policy == "review" || policy.access_policy == "deny" || policy.access_policy == "permit"]) == length(var.private_path_account_policies)
+    condition     = alltrue([for policy in flatten(var.private_path_account_policies) : contains(["review", "deny", "permit"], policy.access_policy)])
     error_message = "The specified access policy is not valid. Supported options are permit, deny, or review."
   }
 }
