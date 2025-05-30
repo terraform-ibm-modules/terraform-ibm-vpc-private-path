@@ -20,16 +20,18 @@ resource "ibm_is_lb" "ppnlb" {
 ##############################################################################
 
 resource "ibm_is_lb_pool" "pool" {
+  for_each = { for pool in var.nlb_backend_pools :
+  pool.pool_name => pool }
   lb                  = ibm_is_lb.ppnlb.id
-  name                = "${var.nlb_name}-lb-pool"
-  algorithm           = var.nlb_pool_algorithm
+  name                = each.key
+  algorithm           = each.value.pool_algorithm
   protocol            = "tcp"
-  health_delay        = var.nlb_pool_health_delay
-  health_retries      = var.nlb_pool_health_retries
-  health_timeout      = var.nlb_pool_health_timeout
-  health_type         = var.nlb_pool_health_type
-  health_monitor_port = var.nlb_pool_health_monitor_port
-  health_monitor_url  = var.nlb_pool_health_type == "http" ? var.nlb_pool_health_monitor_url : null
+  health_delay        = each.value.pool_health_delay
+  health_retries      = each.value.pool_health_retries
+  health_timeout      = each.value.pool_health_timeout
+  health_type         = each.value.pool_health_type
+  health_monitor_port = each.value.pool_health_monitor_port
+  health_monitor_url  = each.value.pool_health_type == "http" ? each.value.pool_health_monitor_url : null
 }
 
 ##############################################################################
@@ -39,23 +41,33 @@ resource "ibm_is_lb_pool" "pool" {
 ##############################################################################
 
 locals {
-  nlb_pool_members = length(var.nlb_pool_member_instance_ids) != 0 ? flatten([
-    for server in var.nlb_pool_member_instance_ids :
-    {
-      port      = var.nlb_pool_member_port
-      lb        = var.nlb_name
-      target_id = server
-      profile   = "network-private-path"
-    }
-  ]) : []
+  pool_listener = { for pool in var.nlb_backend_pools :
+    pool.pool_name => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id })
+  }
+
+  # The `ibm_is_lb_pool_member` has a limitation where it can only add one target at a time, hence creating a more complex map with unique objects that have different target IDs.
+  pool_members = merge(flatten(concat(
+    [
+      for pool in var.nlb_backend_pools :
+      {
+        for count, id in pool.pool_member_instance_ids :
+        "${pool.pool_name}-${count}" => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id }, { target_id = id })
+      } if length(pool.pool_member_instance_ids) > 0
+    ],
+    [{
+      for pool in var.nlb_backend_pools :
+      pool.pool_name => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id }, { target_id = pool.pool_member_application_load_balancer_id })
+      if length(pool.pool_member_instance_ids) == 0
+    }]
+  ))...)
 }
 
 resource "ibm_is_lb_pool_member" "nlb_pool_members" {
-  count     = length(local.nlb_pool_members)
-  port      = local.nlb_pool_members[count.index].port
+  for_each  = local.pool_members
+  port      = each.value.pool_member_port
   lb        = ibm_is_lb.ppnlb.id
-  pool      = element(split("/", ibm_is_lb_pool.pool.id), 1)
-  target_id = local.nlb_pool_members[count.index].target_id
+  pool      = element(split("/", each.value.pool_id), 1)
+  target_id = each.value.target_id
 }
 
 ##############################################################################
@@ -65,12 +77,13 @@ resource "ibm_is_lb_pool_member" "nlb_pool_members" {
 ##############################################################################
 
 resource "ibm_is_lb_listener" "listener" {
+  for_each              = local.pool_listener
   lb                    = ibm_is_lb.ppnlb.id
-  default_pool          = ibm_is_lb_pool.pool.id
-  port_min              = var.nlb_listener_port
-  port_max              = var.nlb_listener_port
+  default_pool          = each.value.pool_id
+  port_min              = each.value.listener_port
+  port_max              = each.value.listener_port
   protocol              = "tcp"
-  accept_proxy_protocol = var.nlb_listener_accept_proxy_protocol
+  accept_proxy_protocol = each.value.listener_accept_proxy_protocol
   depends_on            = [ibm_is_lb_pool_member.nlb_pool_members]
 }
 
