@@ -18,7 +18,7 @@ This solution supports provisioning and configuring the following infrastructure
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
-| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.78.3 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | 1.78.4 |
 
 ### Modules
 
@@ -31,7 +31,7 @@ This solution supports provisioning and configuring the following infrastructure
 
 | Name | Type |
 |------|------|
-| [ibm_is_vpc.vpc](https://registry.terraform.io/providers/ibm-cloud/ibm/1.78.3/docs/data-sources/is_vpc) | data source |
+| [ibm_is_vpc.vpc](https://registry.terraform.io/providers/ibm-cloud/ibm/1.78.4/docs/data-sources/is_vpc) | data source |
 
 ### Inputs
 
