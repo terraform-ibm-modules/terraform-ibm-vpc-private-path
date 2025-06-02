@@ -14,7 +14,7 @@ locals {
   private_path_name         = "${local.prefix}${var.private_path_name}"
   subnet_id                 = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc[0].subnets[0].id
   # tflint-ignore: terraform_unused_declarations
-  validate_number_of_subnets = var.existing_vpc_id == null && length(data.ibm_is_vpc.vpc[0].subnets) > 0 ? true : tobool("Existing VPC should have atleast one subnet.")
+  validate_number_of_subnets = var.existing_vpc_id != null ? length(data.ibm_is_vpc.vpc[0].subnets) > 0 ? true : tobool("Existing VPC should have atleast one subnet.") : true
 }
 
 data "ibm_is_vpc" "vpc" {
