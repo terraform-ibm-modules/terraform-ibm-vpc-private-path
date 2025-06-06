@@ -13,6 +13,8 @@ locals {
   network_loadbalancer_name = "${local.prefix}${var.network_loadbalancer_name}"
   private_path_name         = "${local.prefix}${var.private_path_name}"
   subnet_id                 = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc[0].subnets[0].id
+  # tflint-ignore: terraform_unused_declarations
+  validate_number_of_subnets = var.existing_vpc_id != null ? length(data.ibm_is_vpc.vpc[0].subnets) > 0 ? true : tobool("Existing VPC should have atleast one subnet.") : true
 }
 
 data "ibm_is_vpc" "vpc" {
@@ -27,18 +29,7 @@ module "private_path" {
   tags                               = var.private_path_tags
   access_tags                        = var.private_path_access_tags
   nlb_name                           = local.network_loadbalancer_name
-  nlb_listener_port                  = var.network_loadbalancer_listener_port
-  nlb_listener_accept_proxy_protocol = var.network_loadbalancer_listener_accept_proxy_protocol
-  nlb_pool_algorithm                 = var.network_loadbalancer_pool_algorithm
-  nlb_pool_health_delay              = var.network_loadbalancer_pool_health_delay
-  nlb_pool_health_retries            = var.network_loadbalancer_pool_health_retries
-  nlb_pool_health_timeout            = var.network_loadbalancer_pool_health_timeout
-  nlb_pool_health_type               = var.network_loadbalancer_pool_health_type
-  nlb_pool_health_monitor_url        = var.network_loadbalancer_pool_health_monitor_url
-  nlb_pool_health_monitor_port       = var.network_loadbalancer_pool_health_monitor_port
-  nlb_pool_member_port               = var.network_loadbalancer_pool_member_port
-  nlb_pool_member_instance_ids       = var.network_loadbalancer_pool_member_instance_ids
-
+  nlb_backend_pools                  = var.network_loadbalancer_backend_pools
   private_path_name                  = local.private_path_name
   private_path_default_access_policy = var.private_path_default_access_policy
   private_path_service_endpoints     = var.private_path_service_endpoints

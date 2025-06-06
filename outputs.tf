@@ -13,17 +13,20 @@ output "lb_id" {
 
 output "pool_id" {
   description = "The unique identifier of the load balancer pool."
-  value       = ibm_is_lb_pool.pool.id
+  value = { for key, value in ibm_is_lb_pool.pool :
+  key => value.id }
 }
 
 output "pool_member_id" {
   description = "The unique identifier of the load balancer pool member."
-  value       = ibm_is_lb_pool_member.nlb_pool_members[*].id
+  value = { for key, value in ibm_is_lb_pool_member.nlb_pool_members :
+  key => value.id }
 }
 
 output "listener_id" {
   description = "The unique identifier of the load balancer listener."
-  value       = ibm_is_lb_listener.listener.id
+  value = { for key, value in ibm_is_lb_listener.listener :
+  key => value.id }
 }
 
 output "private_path_crn" {
