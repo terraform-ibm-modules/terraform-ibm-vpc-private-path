@@ -32,16 +32,19 @@ variable "region" {
 
 variable "prefix" {
   type        = string
-  description = "The prefix to add to all resources that this solution creates (e.g `prod`, `test`, `dev`). To not use any prefix value, you can set this value to `null` or an empty string."
   nullable    = true
+  description = "The prefix to be added to all resources created by this solution. To skip using a prefix, set this value to null or an empty string. The prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It should not exceed 16 characters, must not end with a hyphen('-'), and can not contain consecutive hyphens ('--'). Example: wx-0205-private-path. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/prefix.md)"
+
   validation {
-    condition = (var.prefix == null ? true :
-      alltrue([
-        can(regex("^[a-z]{0,1}[-a-z0-9]{0,14}[a-z0-9]{0,1}$", var.prefix)),
-        length(regexall("^.*--.*", var.prefix)) == 0
-      ])
-    )
-    error_message = "Prefix must begin with a lowercase letter, contain only lowercase letters, numbers, and - characters. Prefixes must end with a lowercase letter or number and be 16 or fewer characters."
+    condition = var.prefix == null || var.prefix == "" ? true : alltrue([
+      can(regex("^[a-z][-a-z0-9]*[a-z0-9]$", var.prefix)), length(regexall("--", var.prefix)) == 0
+    ])
+    error_message = "Prefix must begin with a lowercase letter and may contain only lowercase letters, digits, and hyphens '-'. It must not end with a hyphen('-'), and cannot contain consecutive hyphens ('--')."
+  }
+
+  validation {
+    condition     = var.prefix == null || var.prefix == "" ? true : length(var.prefix) <= 16
+    error_message = "Prefix must not exceed 16 characters."
   }
 }
 
@@ -87,70 +90,24 @@ variable "network_loadbalancer_name" {
   default     = "pp-nlb"
 }
 
-variable "network_loadbalancer_listener_port" {
-  type        = number
-  description = "The listener port for the private path netwrok load balancer."
-  default     = 80
-}
-
-variable "network_loadbalancer_listener_accept_proxy_protocol" {
-  type        = bool
-  description = "If set to true, listener forwards proxy protocol information that are supported by load balancers in the application family. Default value is false."
-  default     = false
-}
-
-variable "network_loadbalancer_pool_algorithm" {
-  type        = string
-  description = "The load-balancing algorithm for private path netwrok load balancer pool members. Supported values are `round_robin` or `weighted_round_robin`."
-  default     = "round_robin"
-}
-
-variable "network_loadbalancer_pool_health_delay" {
-  type        = number
-  description = "The interval between 2 consecutive health check attempts. The default is 5 seconds. Interval must be greater than `network_loadbalancer_pool_health_timeout` value."
-  default     = 5
-}
-
-variable "network_loadbalancer_pool_health_retries" {
-  type        = number
-  description = "The maximum number of health check attempts made before an instance is declared unhealthy. The default is 2 failed health checks."
-  default     = 2
-}
-
-variable "network_loadbalancer_pool_health_timeout" {
-  type        = number
-  description = "The maximum time the system waits for a response from a health check request. The default is 2 seconds."
-  default     = 2
-}
-
-variable "network_loadbalancer_pool_health_type" {
-  type        = string
-  description = "The protocol used to send health check messages to instances in the pool. Supported values are `tcp` or `http`."
-  default     = "tcp"
-}
-
-variable "network_loadbalancer_pool_health_monitor_url" {
-  type        = string
-  description = "If you select HTTP as the health check protocol, this URL is used to send health check requests to the instances in the pool. By default, this is the root path `/`"
-  default     = "/"
-}
-
-variable "network_loadbalancer_pool_health_monitor_port" {
-  type        = number
-  description = "The port on which the load balancer sends health check requests. By default, health checks are sent on the same port where traffic is sent to the instance."
-  default     = 80
-}
-
-variable "network_loadbalancer_pool_member_port" {
-  type        = number
-  description = "The port where traffic is sent to the instance."
-  default     = 80
-}
-
-variable "network_loadbalancer_pool_member_instance_ids" {
-  type        = list(string)
-  description = "The list of instance ids that you want to attach to the back-end pool."
+variable "network_loadbalancer_backend_pools" {
+  type = list(object({
+    pool_name                                = string
+    pool_algorithm                           = optional(string, "round_robin")
+    pool_health_delay                        = optional(number, 5)
+    pool_health_retries                      = optional(number, 2)
+    pool_health_timeout                      = optional(number, 2)
+    pool_health_type                         = optional(string, "tcp")
+    pool_health_monitor_url                  = optional(string, "/")
+    pool_health_monitor_port                 = optional(number, 80)
+    pool_member_port                         = optional(number)
+    pool_member_instance_ids                 = optional(list(string), [])
+    pool_member_application_load_balancer_id = optional(string)
+    listener_port                            = optional(number)
+    listener_accept_proxy_protocol           = optional(bool, false)
+  }))
   default     = []
+  description = "A list describing backend pools for the private path network load balancer. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/fully-configurable/DA_inputs.md#options-with-backend-pools)."
 }
 
 ##############################################################################
@@ -191,6 +148,6 @@ variable "private_path_account_policies" {
     account       = string
     access_policy = string
   }))
-  description = "The account-specific connection request policies. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/standard/DA-types.md)."
+  description = "The account-specific connection request policies. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/fully-configurable/DA_inputs.md#options-with-acc-policies)."
   default     = []
 }

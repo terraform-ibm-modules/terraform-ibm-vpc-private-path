@@ -4,7 +4,7 @@
 
 module "resource_group" {
   source  = "terraform-ibm-modules/resource-group/ibm"
-  version = "1.2.0"
+  version = "1.2.1"
   # if an existing resource group is not set (null) create a new one using prefix
   resource_group_name          = var.resource_group == null ? "${var.prefix}-resource-group" : null
   existing_resource_group_name = var.resource_group
@@ -69,7 +69,6 @@ resource "ibm_is_instance" "vsi" {
   user_data = file("./userdata.sh")
 }
 
-
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
@@ -78,13 +77,29 @@ module "private_path" {
   private_path_name                  = "${var.prefix}-pp"
   private_path_service_endpoints     = ["vpc-pps.example.com"]
   private_path_default_access_policy = "permit"
-  nlb_pool_member_instance_ids       = [for vsi in ibm_is_instance.vsi : vsi.id]
-  nlb_pool_member_port               = 80
-  nlb_pool_health_delay              = 60
-  nlb_pool_health_retries            = 5
-  nlb_pool_health_timeout            = 30
-  nlb_pool_health_type               = "http"
-  nlb_listener_port                  = 80
+
+  nlb_backend_pools = [
+    {
+      pool_name                = "backend-1"
+      pool_member_instance_ids = [for vsi in ibm_is_instance.vsi : vsi.id]
+      pool_member_port         = 80
+      pool_health_delay        = 60
+      pool_health_retries      = 5
+      pool_health_timeout      = 30
+      pool_health_type         = "http"
+      listener_port            = 80
+    },
+    {
+      pool_name                                = "backend-2"
+      pool_member_application_load_balancer_id = ibm_is_lb.alb.id
+      pool_member_port                         = 80
+      pool_health_delay                        = 60
+      pool_health_retries                      = 5
+      pool_health_timeout                      = 30
+      pool_health_type                         = "http"
+      listener_port                            = 81
+    }
+  ]
 }
 
 ##############################################################################
@@ -107,7 +122,7 @@ resource "ibm_is_subnet" "consumer_subnet" {
 
 module "vpe" {
   source            = "terraform-ibm-modules/vpe-gateway/ibm"
-  version           = "4.5.0"
+  version           = "4.6.6"
   resource_group_id = module.resource_group.resource_group_id
   vpc_id            = ibm_is_vpc.consumer_vpc.id
   cloud_service_by_crn = [
