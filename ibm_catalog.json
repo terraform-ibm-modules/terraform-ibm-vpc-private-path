@@ -266,10 +266,6 @@
                 {
                   "dependency_output": "vpc_id",
                   "version_input": "existing_vpc_id"
-                },
-                {
-                  "dependency_output": "private_path_subnet_id",
-                  "version_input": "existing_subnet_id"
                 }
               ],
               "optional": true,
