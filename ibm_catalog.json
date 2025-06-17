@@ -67,7 +67,7 @@
               {
                 "diagram": {
                   "caption": "VPC Private Path topology",
-                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/reference-architecture/private-path.svg",
+                  "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/reference-architecture/deployable-architecture-private-path.svg",
                   "type": "image/svg+xml"
                 },
                 "description": "<ul><li>Provisions a VPC Private Path service to enable secure connectivity within IBM Cloud.</li><li>Deploys a Private Network Load Balancer configured with a backend pool.</li><li>Integrates a Virtual Private Endpoint (VPE) gateway to connect to IBM Cloud services privately.</li></ul>"
