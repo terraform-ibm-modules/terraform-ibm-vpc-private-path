@@ -91,6 +91,8 @@
               "key": "ibmcloud_api_key"
             },
             {
+              "key": "region",
+              "required": true,
               "custom_config": {
                 "config_constraints": {
                   "generationType": "2"
@@ -98,9 +100,7 @@
                 "grouping": "deployment",
                 "original_grouping": "deployment",
                 "type": "vpc_region"
-              },
-              "key": "region",
-              "required": true
+              }
             },
             {
               "key": "prefix",
@@ -266,6 +266,10 @@
                 {
                   "dependency_output": "vpc_id",
                   "version_input": "existing_vpc_id"
+                },
+                {
+                  "dependency_output": "private_path_subnet_id",
+                  "version_input": "existing_subnet_id"
                 }
               ],
               "optional": true,
