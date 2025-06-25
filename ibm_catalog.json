@@ -62,7 +62,7 @@
             {
               "role_crns": ["crn:v1:bluemix:public:iam::::role:Administrator"],
               "service_name": "is.vpc",
-              "notes": "[Optional] Required if Cloud automation for VPC is enabled."
+              "notes": "[Optional] Required if Cloud automation for Virtual Private Cloud(VPC) is enabled."
             },
             {
               "role_crns": ["crn:v1:bluemix:public:iam::::role:Editor"],
@@ -89,7 +89,7 @@
                   "url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/reference-architecture/deployable-architecture-private-path.svg",
                   "type": "image/svg+xml"
                 },
-                "description": "<ul><li>Provisions a VPC Private Path service to enable secure connectivity within IBM Cloud.</li><li>Deploys a Private Network Load Balancer configured with a backend pool.</li><li>Integrates a Virtual Private Endpoint (VPE) gateway to connect to IBM Cloud services privately.</li></ul>"
+                "description": "This solution provisions a <b>Private Path</b> service on IBM Cloud, enabling secure, private connectivity between resources within a Virtual Private Cloud (VPC) and IBM Cloud services or on-premises networks. The Private Path service facilitates encrypted, low-latency communication by bypassing the public internet, ensuring data confidentiality and integrity.<br><br>As part of the deployment, a <b>Private Network Load Balancer (NLB)</b> is created and configured with a backend pool, enabling internal traffic distribution across compute resources. This enhances both scalability and high availability for applications hosted within your VPC.<br><br>You can optionally create a new <b>VPC</b> as part of this solution by including the <a href=\"https://cloud.ibm.com/catalog/7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3/architecture/deploy-arch-ibm-vpc-2af61763-f8ef-4527-a815-b92166f29bc8-global\">Cloud automation for VPC</a> dependency, or you may bring your own existing VPC. The VPC can be provisioned in either a single-zone or multi-zone configuration depending on your high availability needs. By default, a three-zone VPC topology is deployed to enhance resilience."
               }
             ]
           },
@@ -101,7 +101,7 @@
               "key": "prefix",
               "required": true
             },
-             {
+            {
               "custom_config": {
                 "config_constraints": {
                   "generationType": "2"
@@ -231,7 +231,7 @@
           "dependencies": [
             {
               "name": "deploy-arch-ibm-account-infra-base",
-              "description": "Cloud automation for Account Configuration organizes your IBM Cloud account with a ready-made set of resource groups by default and, when you enable the \"with Account Settings\" option, it also applies baseline security and governance settings. ",
+              "description": "Cloud automation for Account Configuration organizes your IBM Cloud account with a ready-made set of resource groups by default and, when you enable the \"with Account Settings\" option, it also applies baseline security and governance settings.",
               "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
               "flavors": [
                 "resource-group-only",
@@ -256,7 +256,7 @@
             },
             {
               "name": "deploy-arch-ibm-vpc",
-              "description": "Cloud automation for VPC provisions and configures an IBM Virtual Private Cloud (VPC) environment with subnets, network ACLs, public gateways, and routing tables.",
+              "description": "Provisions and configure the VPC instance and subnets where the Private path resources will be deployed.",
               "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
               "flavors": ["fully-configurable"],
               "id": "2af61763-f8ef-4527-a815-b92166f29bc8-global",
@@ -272,13 +272,18 @@
                   "reference_version": true
                 },
                 {
+                  "dependency_input": "region",
+                  "version_input": "region",
+                  "reference_version": true
+                },
+                {
                   "dependency_output": "vpc_id",
                   "version_input": "existing_vpc_id"
                 }
               ],
               "optional": true,
               "on_by_default": true,
-              "version": "^v7.24.0"
+              "version": "v7.24.0"
             }
           ],
           "dependency_version_2": true,
