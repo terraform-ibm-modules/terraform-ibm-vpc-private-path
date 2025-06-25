@@ -36,7 +36,7 @@
           "description": "Set up a [Private Network Load Balancer](https://cloud.ibm.com/docs/vpc?topic=vpc-load-balancers#private-path-nlb) that directs traffic securely over the Private Path. It includes a backend pool and is integrated with a Virtual Private Endpoint (VPE) gateway to connect to supported IBM services privately."
         }
       ],
-      "support_details": "This product is in the community registry, as such support is handled through the originated repo. If you experience issues, please open an issue in the repository [here](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/issues). Please note this product is not supported via the IBM Cloud Support Center.",
+      "support_details": "This product is in the community registry. As such support is handled through the originated repo. If you experience issues, please open an issue in the repository [here](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/issues). Please note this product is not supported via the IBM Cloud Support Center.",
       "flavors": [
         {
           "label": "Fully Configurable",
