@@ -21,7 +21,7 @@
         "terraform",
         "solution"
       ],
-      "short_description": "Automates the deployment of VPC Private Path on IBM Cloud, enabling secure, high-performance private connectivity between IBM Cloud services.",
+      "short_description": "Deploy a VPC Private Path on IBM Cloud, enabling secure, high-performance private connectivity between IBM Cloud services.",
       "long_description": "The Cloud automation for VPC Private Path provisions a [VPC Private Path service](https://cloud.ibm.com/docs/vpc?topic=vpc-private-path-service-intro) on IBM Cloud, which enables private, secure, and high-throughput network connectivity between your Virtual Private Cloud (VPC) and supported IBM Cloud services—without traversing the public internet. This service is ideal for use cases that demand enhanced security, low latency, and predictable network performance. \n\nℹ️ This Terraform-based automation is part of a broader suite of IBM-maintained Infrastructure as Code (IaC) assets, each following the naming pattern \"Cloud automation for *servicename*\" and focusing on single IBM Cloud service. These single-service deployable architectures can be used on their own to streamline and automate service deployments through an [IaC approach](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-understanding-projects), or assembled together into a broader [automated IaC stack](https://cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-config-stack) to automate the deployment of an end-to-end solution architecture.",
       "offering_docs_url": "https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/blob/main/solutions/fully-configurable/README.md",
       "offering_icon_url": "https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/main/images/private_path.svg",
@@ -36,7 +36,7 @@
           "description": "Set up a [Private Network Load Balancer](https://cloud.ibm.com/docs/vpc?topic=vpc-load-balancers#private-path-nlb) that directs traffic securely over the Private Path. It includes a backend pool and is integrated with a Virtual Private Endpoint (VPE) gateway to connect to supported IBM services privately."
         }
       ],
-      "support_details": "This product is in the community registry. As such support is handled through the originated repo. If you experience issues, please open an issue in the repository [here](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/issues). Please note this product is not supported via the IBM Cloud Support Center.",
+      "support_details": "This product is in the community registry, support is handled through the [original repo](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path). If you experience issues, please open an issue in the repository [here](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/issues). Please note this product is not supported via the IBM Cloud Support Center.",
       "flavors": [
         {
           "label": "Fully Configurable",
@@ -155,7 +155,8 @@
             },
             {
               "key": "private_path_tags",
-              "custom_config": {
+               "custom_config": {
+                "type": "array",
                 "grouping": "deployment",
                 "original_grouping": "deployment",
                 "config_constraints": {
