@@ -90,6 +90,7 @@
                   "type": "image/svg+xml"
                 },
                 "description": "This solution provisions a <b>Private Path</b> service on IBM Cloud, enabling secure, private connectivity between resources within a Virtual Private Cloud (VPC) and IBM Cloud services or on-premises networks. The Private Path service facilitates encrypted, low-latency communication by bypassing the public internet, ensuring data confidentiality and integrity.<br><br>As part of the deployment, a <b>Private Network Load Balancer (NLB)</b> is created and configured with a backend pool, enabling internal traffic distribution across compute resources. This enhances both scalability and high availability for applications hosted within your VPC.<br><br>You can optionally create a new <b>VPC</b> as part of this solution by including the <a href=\"https://cloud.ibm.com/catalog/7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3/architecture/deploy-arch-ibm-vpc-2af61763-f8ef-4527-a815-b92166f29bc8-global\">Cloud automation for VPC</a> dependency, or you may bring your own existing VPC. The VPC can be provisioned in either a single-zone or multi-zone configuration depending on your high availability needs. By default, a three-zone VPC topology is deployed to enhance resilience."
+"
               }
             ]
           },
