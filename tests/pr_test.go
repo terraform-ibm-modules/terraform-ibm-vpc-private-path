@@ -98,7 +98,6 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 		options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 			Testing: t,
 			Prefix:  prefix,
-			Region:  region,
 			TarIncludePatterns: []string{
 				fullyConfigurableTerraformDir + "/*.*",
 				"*.tf",
@@ -176,7 +175,6 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 		options := testschematic.TestSchematicOptionsDefault(&testschematic.TestSchematicOptions{
 			Testing: t,
 			Prefix:  prefix,
-			Region:  region,
 			TarIncludePatterns: []string{
 				fullyConfigurableTerraformDir + "/*.*",
 				"*.tf",
