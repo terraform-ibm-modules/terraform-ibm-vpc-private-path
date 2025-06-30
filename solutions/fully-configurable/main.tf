@@ -37,7 +37,7 @@ data "ibm_is_vpc" "vpc" {
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
-  subnet_id                          = local.subnet
+  subnet_id                          = local.subnet_id
   tags                               = var.private_path_tags
   access_tags                        = var.private_path_access_tags
   nlb_name                           = local.network_loadbalancer_name
