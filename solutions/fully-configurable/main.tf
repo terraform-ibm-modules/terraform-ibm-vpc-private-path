@@ -12,20 +12,32 @@ locals {
   prefix                    = var.prefix != null ? trimspace(var.prefix) != "" ? "${var.prefix}-" : "" : ""
   network_loadbalancer_name = "${local.prefix}${var.network_loadbalancer_name}"
   private_path_name         = "${local.prefix}${var.private_path_name}"
-  subnet_id                 = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc[0].subnets[0].id
-  # tflint-ignore: terraform_unused_declarations
-  validate_number_of_subnets = var.existing_vpc_id != null ? length(data.ibm_is_vpc.vpc[0].subnets) > 0 ? true : tobool("Existing VPC should have atleast one subnet.") : true
+  vpc_region                = module.existing_vpc_crn_parser.region
+  existing_vpc_id           = module.existing_vpc_crn_parser.resource
+  # When `existing_subnet_id` is not provided, use the first subnet from the existing VPC.
+  subnet = var.existing_subnet_id != null ? data.ibm_is_subnet.subnet[0].id : data.ibm_is_vpc.vpc.subnets[0].id
+
+}
+
+module "existing_vpc_crn_parser" {
+  source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
+  version = "1.2.0"
+  crn     = var.existing_vpc_crn
+}
+
+data "ibm_is_subnet" "subnet" {
+  count      = var.existing_subnet_id != null ? 1 : 0
+  identifier = var.existing_subnet_id
 }
 
 data "ibm_is_vpc" "vpc" {
-  count      = var.existing_vpc_id != null && var.existing_subnet_id == null ? 1 : 0
-  identifier = var.existing_vpc_id
+  identifier = local.existing_vpc_id
 }
 
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
-  subnet_id                          = local.subnet_id
+  subnet_id                          = local.subnet
   tags                               = var.private_path_tags
   access_tags                        = var.private_path_access_tags
   nlb_name                           = local.network_loadbalancer_name

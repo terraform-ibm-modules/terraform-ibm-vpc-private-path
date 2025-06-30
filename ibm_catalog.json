@@ -101,7 +101,10 @@
               "key": "prefix",
               "required": true
             },
-            {
+             {
+              "key": "region",
+              "required": true,
+              "type": "string",
               "custom_config": {
                 "config_constraints": {
                   "generationType": "2"
@@ -110,8 +113,9 @@
                 "original_grouping": "deployment",
                 "type": "vpc_region"
               },
-              "key": "region",
-              "required": true
+              "description": "Region in which all the resources will be deployed. [Learn More](https://terraform-ibm-modules.github.io/documentation/#/region).",
+              "virtual": true,
+              "default_value": "us-south"
             },
             {
               "key": "existing_resource_group_name",
@@ -126,11 +130,11 @@
               }
             },
             {
-              "key": "existing_vpc_id"
+              "key": "existing_vpc_crn",
+              "required": true
             },
             {
               "key": "existing_subnet_id",
-              "required": true,
               "custom_config": {
                 "type": "platform_resource",
                 "grouping": "deployment",
@@ -139,6 +143,14 @@
                   "resourceType": "subnet",
                   "selection": "single_select",
                   "valueType": "id"
+                },
+                "associations": {
+                  "parameters": [
+                    {
+                      "name": "region",
+                      "optionsRefresh": true
+                    }
+                  ]
                 }
               }
             },
@@ -258,18 +270,18 @@
             {
               "name": "deploy-arch-ibm-vpc",
               "description": "Provisions and configure the VPC instance and subnets where the Private path resources will be deployed.",
+             "id": "2af61763-f8ef-4527-a815-b92166f29bc8-global",
+              "version": "v7.24.0",
+              "flavors": [
+                "fully-configurable"
+              ],
               "catalog_id": "7a4d68b4-cf8b-40cd-a3d1-f49aff526eb3",
-              "flavors": ["fully-configurable"],
-              "id": "2af61763-f8ef-4527-a815-b92166f29bc8-global",
+              "optional": true,
+              "on_by_default": true,
               "input_mapping": [
                 {
                   "dependency_input": "prefix",
                   "version_input": "prefix",
-                  "reference_version": true
-                },
-                {
-                  "dependency_input": "existing_resource_group_name",
-                  "version_input": "existing_resource_group_name",
                   "reference_version": true
                 },
                 {
@@ -278,13 +290,15 @@
                   "reference_version": true
                 },
                 {
-                  "dependency_output": "vpc_id",
-                  "version_input": "existing_vpc_id"
+                  "dependency_input": "existing_resource_group_name",
+                  "version_input": "existing_resource_group_name",
+                  "reference_version": true
+                },
+                {
+                  "dependency_output": "vpc_crn",
+                  "version_input": "existing_vpc_crn"
                 }
-              ],
-              "optional": true,
-              "on_by_default": true,
-              "version": "v7.24.0"
+              ]
             }
           ],
           "dependency_version_2": true,
