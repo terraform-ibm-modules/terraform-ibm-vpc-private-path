@@ -25,11 +25,6 @@ variable "existing_resource_group_name" {
   default     = "Default"
 }
 
-variable "region" {
-  type        = string
-  description = "The region to provision all resources in. [Learn more](https://terraform-ibm-modules.github.io/documentation/#/region) about how to select different regions for different services."
-}
-
 variable "prefix" {
   type        = string
   nullable    = true
@@ -74,18 +69,14 @@ variable "private_path_access_tags" {
 # VPC Variables
 ##############################################################################
 
-variable "existing_vpc_id" {
-  description = "The ID of an existing VPC. If the user provides only the `existing_vpc_id` the private path service will be provisioned in the first subnet."
+variable "existing_vpc_crn" {
+  description = "The CRN of an existing VPC. If the user provides only the `existing_vpc_crn` the private path service will be provisioned in the first subnet of the VPC."
   type        = string
-  default     = null
-  validation {
-    condition     = var.existing_vpc_id == null && var.existing_subnet_id == null ? false : true
-    error_message = "A value for either `existing_vpc_id` or `existing_subnet_id` should be passed."
-  }
+  nullable    = false
 }
 
 variable "existing_subnet_id" {
-  description = "The ID of an existing subnet."
+  description = "The ID of an existing subnet. If no value is passed, the private path service is deployed to the first subnet from the Virtual Private Cloud(VPC)."
   type        = string
   default     = null
 }

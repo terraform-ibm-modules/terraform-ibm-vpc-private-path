@@ -11,3 +11,8 @@ output "resource_group_name" {
   value       = module.resource_group.resource_group_name
   description = "Resource group name."
 }
+
+output "vpc_crn" {
+  value       = ibm_is_vpc.provider_vpc.crn
+  description = "VPC CRN."
+}
