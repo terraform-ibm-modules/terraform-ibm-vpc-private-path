@@ -112,6 +112,7 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 			{Name: "prefix", Value: prefix, DataType: "string"},
 			{Name: "existing_resource_group_name", Value: terraform.Output(t, existingTerraformOptions, "resource_group_name"), DataType: "string"},
+			{Name: "existing_vpc_crn", Value: terraform.Output(t, existingTerraformOptions, "vpc_crn"), DataType: "string"},
 			{Name: "existing_subnet_id", Value: terraform.Output(t, existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
 			{Name: "private_path_service_endpoints", Value: []string{"vpc-pps.example.com"}, DataType: "list(string)"},
 		}
@@ -188,6 +189,7 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 			{Name: "prefix", Value: prefix, DataType: "string"},
 			{Name: "existing_resource_group_name", Value: terraform.Output(t, existingTerraformOptions, "resource_group_name"), DataType: "string"},
+			{Name: "existing_vpc_crn", Value: terraform.Output(t, existingTerraformOptions, "vpc_crn"), DataType: "string"},
 			{Name: "existing_subnet_id", Value: terraform.Output(t, existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
 			{Name: "private_path_service_endpoints", Value: []string{"vpc-pps.example.com"}, DataType: "list(string)"},
 		}
