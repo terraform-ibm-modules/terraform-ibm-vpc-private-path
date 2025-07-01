@@ -15,7 +15,7 @@ locals {
   vpc_region                = module.existing_vpc_crn_parser.region
   existing_vpc_id           = module.existing_vpc_crn_parser.resource
   # When `existing_subnet_id` is not provided, use the first subnet from the existing VPC.
-  subnet = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc.subnets[0].id
+  subnet_id = var.existing_subnet_id != null ? data.ibm_is_subnet.subnet[0].id : data.ibm_is_vpc.vpc.subnets[0].id
 
 }
 
@@ -32,7 +32,7 @@ data "ibm_is_vpc" "vpc" {
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
-  subnet_id                          = local.subnet
+  subnet_id                          = local.subnet_id
   tags                               = var.private_path_tags
   access_tags                        = var.private_path_access_tags
   nlb_name                           = local.network_loadbalancer_name
