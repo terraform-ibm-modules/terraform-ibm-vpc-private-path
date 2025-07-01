@@ -15,7 +15,7 @@ locals {
   vpc_region                = module.existing_vpc_crn_parser.region
   existing_vpc_id           = module.existing_vpc_crn_parser.resource
   # When `existing_subnet_id` is not provided, use the first subnet from the existing VPC.
-  subnet_id = var.existing_subnet_id != null ? data.ibm_is_subnet.subnet[0].id : data.ibm_is_vpc.vpc.subnets[0].id
+  subnet_id = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc.subnets[0].id
 
 }
 
