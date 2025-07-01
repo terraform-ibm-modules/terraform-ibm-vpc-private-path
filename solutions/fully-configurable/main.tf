@@ -15,7 +15,7 @@ locals {
   vpc_region                = module.existing_vpc_crn_parser.region
   existing_vpc_id           = module.existing_vpc_crn_parser.resource
   # When `existing_subnet_id` is not provided, use the first subnet from the existing VPC.
-  subnet = var.existing_subnet_id != null ? data.ibm_is_subnet.subnet[0].id : data.ibm_is_vpc.vpc.subnets[0].id
+  subnet = var.existing_subnet_id != null ? var.existing_subnet_id : data.ibm_is_vpc.vpc.subnets[0].id
 
 }
 
@@ -23,11 +23,6 @@ module "existing_vpc_crn_parser" {
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
   version = "1.2.0"
   crn     = var.existing_vpc_crn
-}
-
-data "ibm_is_subnet" "subnet" {
-  count      = var.existing_subnet_id != null ? 1 : 0
-  identifier = var.existing_subnet_id
 }
 
 data "ibm_is_vpc" "vpc" {
