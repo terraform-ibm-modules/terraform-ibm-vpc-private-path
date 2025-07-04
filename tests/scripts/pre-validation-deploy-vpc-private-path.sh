@@ -28,17 +28,21 @@ TF_VARS_FILE="terraform.tfvars"
 
   resource_group_name_var_name="existing_resource_group_name"
   resource_group_name_var_value=$(terraform output -state=terraform.tfstate -raw resource_group_name)
+  existing_vpc_name="existing_vpc_crn"
+  existing_vpc_value=$(terraform output -state=terraform.tfstate -raw vpc_crn)
   existing_subnet_id_var_name="existing_subnet_id"
   existing_subnet_id_var_value=$(terraform output -state=terraform.tfstate -raw existing_subnet_id)
 
-  echo "Appending '${resource_group_name_var_name}' and '${existing_subnet_id_var_name}' input variable values to ${JSON_FILE}.."
+  echo "Appending '${resource_group_name_var_name}' and '${existing_vpc_name}' input variable values to ${JSON_FILE}.."
 
   cd "${cwd}"
   jq -r --arg resource_group_name_var_name "${resource_group_name_var_name}" \
     --arg resource_group_name_var_value "${resource_group_name_var_value}" \
+     --arg existing_vpc_name "${existing_vpc_name}" \
+    --arg existing_vpc_value "${existing_vpc_value}" \
     --arg existing_subnet_id_var_name "${existing_subnet_id_var_name}" \
     --arg existing_subnet_id_var_value "${existing_subnet_id_var_value}" \
-    '. + {($resource_group_name_var_name): $resource_group_name_var_value, ($existing_subnet_id_var_name): $existing_subnet_id_var_value}' "${JSON_FILE}" >tmpfile && mv tmpfile "${JSON_FILE}" || exit 1
+    '. + {($resource_group_name_var_name): $resource_group_name_var_value, ($existing_vpc_name): $existing_vpc_value, ($existing_subnet_id_var_name): $existing_subnet_id_var_value}' "${JSON_FILE}" >tmpfile && mv tmpfile "${JSON_FILE}" || exit 1
 
   echo "Pre-validation complete successfully"
 )
