@@ -9,7 +9,8 @@
         "target_terraform",
         "terraform",
         "solution",
-        "network"
+        "network",
+        "converged_infra"
       ],
       "keywords": [
         "vpc",
@@ -55,22 +56,30 @@
           },
           "iam_permissions": [
             {
-              "role_crns": ["crn:v1:bluemix:public:iam::::role:Administrator"],
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
               "service_name": "iam-identity",
               "notes": "[Optional] Required if Cloud automation for account configuration is enabled."
             },
             {
-              "role_crns": ["crn:v1:bluemix:public:iam::::role:Administrator"],
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Administrator"
+              ],
               "service_name": "is.vpc",
               "notes": "[Optional] Required if Cloud automation for Virtual Private Cloud(VPC) is enabled."
             },
             {
-              "role_crns": ["crn:v1:bluemix:public:iam::::role:Editor"],
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Editor"
+              ],
               "service_name": "is.vpc",
               "notes": "Required for creating Private-path service."
             },
             {
-              "role_crns": ["crn:v1:bluemix:public:iam::::role:Viewer"],
+              "role_crns": [
+                "crn:v1:bluemix:public:iam::::role:Viewer"
+              ],
               "service_name": "Resource group only",
               "notes": "Viewer access is required in the resource group you want to provision in."
             }
@@ -167,7 +176,7 @@
             },
             {
               "key": "private_path_tags",
-               "custom_config": {
+              "custom_config": {
                 "type": "array",
                 "grouping": "deployment",
                 "original_grouping": "deployment",
@@ -267,10 +276,10 @@
               "on_by_default": false,
               "version": "v3.0.7"
             },
-           {
+            {
               "name": "deploy-arch-ibm-vpc",
               "description": "Provisions and configure the VPC instance and subnets where the Private path resources will be deployed.",
-             "id": "2af61763-f8ef-4527-a815-b92166f29bc8-global",
+              "id": "2af61763-f8ef-4527-a815-b92166f29bc8-global",
               "version": "v7.24.0",
               "flavors": [
                 "fully-configurable"
