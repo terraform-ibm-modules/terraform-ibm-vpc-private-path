@@ -122,7 +122,7 @@ resource "ibm_is_subnet" "consumer_subnet" {
 
 module "vpe" {
   source            = "terraform-ibm-modules/vpe-gateway/ibm"
-  version           = "4.7.4"
+  version           = "4.7.5"
   resource_group_id = module.resource_group.resource_group_id
   vpc_id            = ibm_is_vpc.consumer_vpc.id
   cloud_service_by_crn = [
