@@ -87,7 +87,7 @@ variable "existing_subnet_id" {
 
 variable "network_loadbalancer_name" {
   type        = string
-  description = "The name of the private path netwrok load balancer."
+  description = "The name of the private path network load balancer."
   default     = "pp-nlb"
 }
 
@@ -103,6 +103,7 @@ variable "network_loadbalancer_backend_pools" {
     pool_health_monitor_port                 = optional(number, 80)
     pool_member_port                         = optional(number)
     pool_member_instance_ids                 = optional(list(string), [])
+    pool_member_reserved_ip_ids              = optional(list(string), [])
     pool_member_application_load_balancer_id = optional(string)
     listener_port                            = optional(number)
     listener_accept_proxy_protocol           = optional(bool, false)

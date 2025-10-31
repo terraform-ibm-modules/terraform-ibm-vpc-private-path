@@ -23,7 +23,7 @@ The `private_path_account_policies` input variable allows you to provide a list 
 ```hcl
 [
   {
-    account        = "gtf640basntrds7fc2b1p6thah78g36h"
+    account        = "gtf640basntrds7fc2b1p6than78g36h"
     access_policy  = "review"
   },
   {
@@ -48,6 +48,7 @@ The `network_loadbalancer_backend_pools` input variable allows you to provide of
   - `pool_health_monitor_url` (optional): This URL is used to send health check requests to the instances in the pool. By default, this is the root path `/`.
   - `pool_health_monitor_port` (optional): (number) The port on which the load balancer sends health check requests. By default, health checks are sent on the same port where traffic is sent to the instance.
   - `pool_member_port` (optional): The port number of the application running in the server member.
+  - `pool_member_reserved_ip_ids`(optional): (List) List of Reserved IPs IDs which will attached as members to the backend pool.
   - `pool_member_instance_ids` (optional): (List) List of virtual server instances which will attached as members to the backend pool.
   - `pool_member_application_load_balancer_id` (optional): ID of the Application loadbalancer to attach as a member of the backend pool. You can have only 1 Application loadbalancer in a backend pool.
   - `listener_accept_proxy_protocol` (optional): (bool) If set to true, listener forwards proxy protocol information that are supported by load balancers in the application family. Default value is false.
