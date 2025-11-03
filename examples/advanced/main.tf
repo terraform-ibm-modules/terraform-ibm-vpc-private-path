@@ -47,7 +47,7 @@ resource "ibm_is_ssh_key" "public_key" {
 }
 
 data "ibm_is_image" "image" {
-  name = "ibm-ubuntu-22-04-3-minimal-amd64-1"
+  name = "ibm-ubuntu-24-04-3-minimal-amd64-3"
 }
 
 resource "ibm_is_instance" "vsi" {
