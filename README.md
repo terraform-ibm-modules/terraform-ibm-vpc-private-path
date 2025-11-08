@@ -27,7 +27,7 @@ The Private Path solution solves security, privacy and complexity problems. Thro
 ## Overview
 * [terraform-ibm-vpc-private-path](#terraform-ibm-vpc-private-path)
 * [Examples](./examples)
-    * [Advanced example](./examples/advanced)
+    * <div style="display: inline-block;"><a href="./examples/advanced">Advanced example</a></div> <div style="display: inline-block; vertical-align: middle;"><a href="https://cloud.ibm.com/schematics/workspaces/create?workspace_name=vpp-advanced-example&repository=github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/examples/advanced" target="_blank"><img src="https://cloud.ibm.com/media/docs/images/icons/Deploy_to_cloud.svg" alt="Deploy to IBM Cloud button"></a></div>
 * [Contributing](#contributing)
 <!-- END OVERVIEW HOOK -->
 
