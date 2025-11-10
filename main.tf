@@ -54,11 +54,20 @@ locals {
         "${pool.pool_name}-${count}" => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id }, { target_id = id })
       } if length(pool.pool_member_instance_ids) > 0
     ],
-    [{
+    [
       for pool in var.nlb_backend_pools :
-      pool.pool_name => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id }, { target_id = pool.pool_member_application_load_balancer_id })
-      if length(pool.pool_member_instance_ids) == 0
-    }]
+      {
+        for count, id in pool.pool_member_reserved_ip_ids :
+        "${pool.pool_name}-ips-${count}" => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id }, { target_id = id })
+      } if length(pool.pool_member_reserved_ip_ids) > 0
+    ],
+    [
+      {
+        for pool in var.nlb_backend_pools :
+        pool.pool_name => merge(pool, { pool_id = ibm_is_lb_pool.pool[pool.pool_name].id }, { target_id = pool.pool_member_application_load_balancer_id })
+        if length(pool.pool_member_instance_ids) == 0 && length(pool.pool_member_reserved_ip_ids) == 0
+      }
+    ]
   ))...)
 }
 

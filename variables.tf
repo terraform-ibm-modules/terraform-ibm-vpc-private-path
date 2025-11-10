@@ -40,7 +40,7 @@ variable "subnet_id" {
 
 variable "nlb_name" {
   type        = string
-  description = "The name of the private path netwrok load balancer."
+  description = "The name of the private path network load balancer."
   default     = "pp-nlb"
 }
 
@@ -56,6 +56,7 @@ variable "nlb_backend_pools" {
     pool_health_monitor_port                 = optional(number, 80)
     pool_member_port                         = optional(number)
     pool_member_instance_ids                 = optional(list(string), [])
+    pool_member_reserved_ip_ids              = optional(list(string), [])
     pool_member_application_load_balancer_id = optional(string)
     listener_port                            = optional(number)
     listener_accept_proxy_protocol           = optional(bool, false)
@@ -91,6 +92,11 @@ variable "nlb_backend_pools" {
   validation {
     condition     = length([for backend in var.nlb_backend_pools : backend]) <= 10
     error_message = "You cannot define more than 10 backend pools."
+  }
+
+  validation {
+    condition     = alltrue([for backend in var.nlb_backend_pools : backend.pool_member_application_load_balancer_id != null && (length(backend.pool_member_reserved_ip_ids) > 0 || length(backend.pool_member_instance_ids) > 0) ? false : true])
+    error_message = "When an Application Load Balancer is added as a backend pool member, no other types of resources can be attached to the pool."
   }
 }
 

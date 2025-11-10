@@ -47,7 +47,7 @@ resource "ibm_is_ssh_key" "public_key" {
 }
 
 data "ibm_is_image" "image" {
-  name = "ibm-ubuntu-22-04-3-minimal-amd64-1"
+  name = "ibm-ubuntu-24-04-3-minimal-amd64-3"
 }
 
 resource "ibm_is_instance" "vsi" {
@@ -69,6 +69,18 @@ resource "ibm_is_instance" "vsi" {
   user_data = file("./userdata.sh")
 }
 
+resource "ibm_is_subnet_reserved_ip" "vsi_ip" {
+  name        = "${var.prefix}-ip"
+  subnet      = ibm_is_subnet.provider_subnet.id
+  auto_delete = false
+}
+
+resource "ibm_is_subnet_reserved_ip" "vsi_ip2" {
+  name        = "${var.prefix}-ip2"
+  subnet      = ibm_is_subnet.provider_subnet.id
+  auto_delete = false
+}
+
 module "private_path" {
   source                             = "../.."
   resource_group_id                  = module.resource_group.resource_group_id
@@ -80,14 +92,15 @@ module "private_path" {
 
   nlb_backend_pools = [
     {
-      pool_name                = "backend-1"
-      pool_member_instance_ids = [for vsi in ibm_is_instance.vsi : vsi.id]
-      pool_member_port         = 80
-      pool_health_delay        = 60
-      pool_health_retries      = 5
-      pool_health_timeout      = 30
-      pool_health_type         = "http"
-      listener_port            = 80
+      pool_name                   = "backend-1"
+      pool_member_instance_ids    = [for vsi in ibm_is_instance.vsi : vsi.id]
+      pool_member_reserved_ip_ids = [ibm_is_subnet_reserved_ip.vsi_ip2.reserved_ip]
+      pool_member_port            = 80
+      pool_health_delay           = 60
+      pool_health_retries         = 5
+      pool_health_timeout         = 30
+      pool_health_type            = "http"
+      listener_port               = 80
     },
     {
       pool_name                                = "backend-2"
@@ -98,6 +111,16 @@ module "private_path" {
       pool_health_timeout                      = 30
       pool_health_type                         = "http"
       listener_port                            = 81
+    },
+    {
+      pool_name                   = "backend-3"
+      pool_member_reserved_ip_ids = [ibm_is_subnet_reserved_ip.vsi_ip.reserved_ip]
+      pool_member_port            = 80
+      pool_health_delay           = 60
+      pool_health_retries         = 5
+      pool_health_timeout         = 30
+      pool_health_type            = "http"
+      listener_port               = 82
     }
   ]
 }
@@ -122,7 +145,7 @@ resource "ibm_is_subnet" "consumer_subnet" {
 
 module "vpe" {
   source            = "terraform-ibm-modules/vpe-gateway/ibm"
-  version           = "4.8.1"
+  version           = "4.8.3"
   resource_group_id = module.resource_group.resource_group_id
   vpc_id            = ibm_is_vpc.consumer_vpc.id
   cloud_service_by_crn = [
