@@ -138,9 +138,7 @@
                 "config_constraints": {
                   "identifier": "rg_name"
                 }
-              },
-              "default_value": "Default",
-              "description": "The name of an existing resource group to provision the resources."
+              }
             },
             {
               "key": "existing_vpc_crn",
@@ -149,7 +147,7 @@
                 {
                   "type": "regex",
                   "description": "The value provided for 'existing_vpc_crn' is not valid.",
-                  "value": "^crn:(.*:){3}is:(.*:){2}:vpc:[0-9a-z]{4}-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                  "value": "^crn:v\\d:(.*:){2}vpc:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$"
                 }
               ]
             },
