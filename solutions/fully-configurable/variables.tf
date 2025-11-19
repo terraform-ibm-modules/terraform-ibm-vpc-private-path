@@ -73,6 +73,16 @@ variable "existing_vpc_crn" {
   description = "The CRN of an existing VPC. If the user provides only the `existing_vpc_crn` the private path service will be provisioned in the first subnet of the VPC."
   type        = string
   nullable    = false
+
+  validation {
+    condition = anytrue([
+      can(regex("^crn:v\\d:(.*:){2}vpc:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.existing_vpc_crn)),
+      var.existing_vpc_crn == null,
+    ])
+    error_message = "The value provided for 'existing_vpc_crn' is not valid."
+
+
+  }
 }
 
 variable "existing_subnet_id" {
