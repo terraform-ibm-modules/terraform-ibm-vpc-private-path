@@ -76,9 +76,10 @@ variable "existing_vpc_crn" {
 
   validation {
     condition = anytrue([
-      can(regex("^crn:v\\d:(.*:){2}vpc:(.*:)([aos]\\/[\\w_\\-]+):[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}::$", var.existing_vpc_crn)),
+      can(regex("^crn:v\\d:(.*:){2}is:(.*:)([aos]\\/[\\w_\\-]+)::vpc:[0-9a-z]{4}-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", var.existing_vpc_crn)),
       var.existing_vpc_crn == null,
     ])
+
     error_message = "The value provided for 'existing_vpc_crn' is not valid."
 
 
