@@ -87,7 +87,7 @@ module "private_path" {
   subnet_id                          = ibm_is_subnet.provider_subnet.id
   nlb_name                           = "${var.prefix}-nlb"
   private_path_name                  = "${var.prefix}-pp"
-  private_path_service_endpoints     = ["vpc-pps.example.com"]
+  private_path_service_endpoints     = ["vpc-pps.dev.internal"]
   private_path_default_access_policy = "permit"
 
   nlb_backend_pools = [
@@ -145,7 +145,7 @@ resource "ibm_is_subnet" "consumer_subnet" {
 
 module "vpe" {
   source            = "terraform-ibm-modules/vpe-gateway/ibm"
-  version           = "4.8.3"
+  version           = "4.8.5"
   resource_group_id = module.resource_group.resource_group_id
   vpc_id            = ibm_is_vpc.consumer_vpc.id
   cloud_service_by_crn = [
