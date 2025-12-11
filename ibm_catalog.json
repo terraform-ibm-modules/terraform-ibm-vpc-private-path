@@ -49,6 +49,7 @@
           "index": 1,
           "install_type": "fullstack",
           "working_directory": "solutions/fully-configurable",
+          "short_description": "Ideal for users who want flexibility with a reliable starting point.",
           "iam_permissions": [
             {
               "role_crns": [
@@ -236,13 +237,33 @@
               "key": "private_path_zonal_affinity"
             },
             {
-              "key": "private_path_account_policies"
+              "key": "private_path_account_policies",
+              "custom_config": {
+                "type": "code_editor",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "supportedLanguages": [
+                    "hcl"
+                  ]
+                }
+              }
             },
             {
               "key": "network_loadbalancer_name"
             },
             {
-              "key": "network_loadbalancer_backend_pools"
+              "key": "network_loadbalancer_backend_pools",
+              "custom_config": {
+                "type": "code_editor",
+                "grouping": "deployment",
+                "original_grouping": "deployment",
+                "config_constraints": {
+                  "supportedLanguages": [
+                    "hcl"
+                  ]
+                }
+              }
             },
             {
               "key": "provider_visibility",
