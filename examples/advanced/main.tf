@@ -99,7 +99,7 @@ module "private_path" {
       pool_health_delay           = 60
       pool_health_retries         = 5
       pool_health_timeout         = 30
-      pool_health_type            = "http"
+      pool_health_type            = "https"
       listener_port               = 80
     },
     {
@@ -109,7 +109,7 @@ module "private_path" {
       pool_health_delay                        = 60
       pool_health_retries                      = 5
       pool_health_timeout                      = 30
-      pool_health_type                         = "http"
+      pool_health_type                         = "https"
       listener_port                            = 81
     },
     {
@@ -119,7 +119,7 @@ module "private_path" {
       pool_health_delay           = 60
       pool_health_retries         = 5
       pool_health_timeout         = 30
-      pool_health_type            = "http"
+      pool_health_type            = "https"
       listener_port               = 82
     }
   ]

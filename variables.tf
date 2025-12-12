@@ -65,8 +65,8 @@ variable "nlb_backend_pools" {
   description = "A list describing backend pools for the private path network load balancer."
 
   validation {
-    condition     = alltrue([for backend in var.nlb_backend_pools : contains(["tcp", "http"], backend.pool_health_type)])
-    error_message = "Backend pool health type values can only be `tcp` or `http`."
+    condition     = alltrue([for backend in var.nlb_backend_pools : contains(["tcp", "https"], backend.pool_health_type)])
+    error_message = "Backend pool health type values can only be `tcp` or `https`."
   }
 
   validation {

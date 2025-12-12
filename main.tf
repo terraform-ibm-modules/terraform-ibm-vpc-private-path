@@ -31,7 +31,7 @@ resource "ibm_is_lb_pool" "pool" {
   health_timeout      = each.value.pool_health_timeout
   health_type         = each.value.pool_health_type
   health_monitor_port = each.value.pool_health_monitor_port
-  health_monitor_url  = each.value.pool_health_type == "http" ? each.value.pool_health_monitor_url : null
+  health_monitor_url  = each.value.pool_health_type == "https" ? each.value.pool_health_monitor_url : null
 }
 
 ##############################################################################
