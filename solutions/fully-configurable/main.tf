@@ -21,7 +21,7 @@ locals {
 
 module "existing_vpc_crn_parser" {
   source  = "terraform-ibm-modules/common-utilities/ibm//modules/crn-parser"
-  version = "1.3.6"
+  version = "1.3.7"
   crn     = var.existing_vpc_crn
 }
 
