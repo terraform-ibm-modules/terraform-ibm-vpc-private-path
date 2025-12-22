@@ -257,7 +257,7 @@ func TestAddonsDefaultConfiguration(t *testing.T) {
 
 	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
 		options.Prefix,
-		"deploy-arch-ibm-is-private-path-ext-conn",
+		"deploy-arch-ibm-is-private-path-service-gateway",
 		"fully-configurable",
 		map[string]interface{}{
 			"region":                         region,
