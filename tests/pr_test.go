@@ -282,6 +282,7 @@ func TestAddonsDefaultConfiguration(t *testing.T) {
 					Inputs: map[string]interface{}{
 						"enable_metrics_routing_to_cloud_monitoring": false,
 					},
+					Enabled: core.BoolPtr(true),
 				},
 				{
 					OfferingName:   "deploy-arch-ibm-activity-tracker",
@@ -289,6 +290,7 @@ func TestAddonsDefaultConfiguration(t *testing.T) {
 					Inputs: map[string]interface{}{
 						"enable_activity_tracker_event_routing_to_cloud_logs": false,
 					},
+					Enabled: core.BoolPtr(true),
 				},
 			},
 		},
