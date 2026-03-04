@@ -253,9 +253,10 @@ func TestAddonsDefaultConfiguration(t *testing.T) {
 	region, _ := testhelper.GetBestVpcRegion(val, "../common-dev-assets/common-go-assets/cloudinfo-region-vpc-gen2-prefs.yaml", "eu-de")
 
 	options := testaddons.TestAddonsOptionsDefault(&testaddons.TestAddonOptions{
-		Testing:   t,
-		Prefix:    "vpc-pps",
-		QuietMode: false, // Suppress logs except on failure
+		Testing:               t,
+		Prefix:                "vpc-pps",
+		QuietMode:             false, // Suppress logs except on failure
+		OverrideInputMappings: core.BoolPtr(true),
 	})
 
 	options.AddonConfig = cloudinfo.NewAddonConfigTerraform(
