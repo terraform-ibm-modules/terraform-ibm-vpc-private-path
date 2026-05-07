@@ -46,14 +46,22 @@ resource "ibm_is_ssh_key" "public_key" {
   public_key = trimspace(tls_private_key.ssh_key.public_key_openssh)
 }
 
-data "ibm_is_image" "image" {
-  name = "ibm-ubuntu-24-04-3-minimal-amd64-3"
+##############################################################################
+# VSI Image lookup
+##############################################################################
+
+module "vsi_image_selector" {
+  source           = "terraform-ibm-modules/common-utilities/ibm//modules/vsi-image-selector"
+  version          = "1.5.0"
+  architecture     = "amd64"
+  operating_system = "ubuntu"
+  image_status     = "available"
 }
 
 resource "ibm_is_instance" "vsi" {
   count   = 2
   name    = "${var.prefix}-vsi-${count.index}"
-  image   = data.ibm_is_image.image.id
+  image   = module.vsi_image_selector.latest_image_id
   profile = "bx2-2x8"
 
   primary_network_attachment {
