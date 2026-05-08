@@ -5,7 +5,7 @@
 resource "ibm_is_instance" "alb_vsi" {
   count   = 2
   name    = "${var.prefix}-alb-vsi-${count.index}"
-  image   = data.ibm_is_image.image.id
+  image   = module.vsi_image_selector.latest_image_id
   profile = "bx2-2x8"
 
   primary_network_attachment {
