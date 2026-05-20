@@ -2,6 +2,7 @@
 package test
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -92,9 +93,9 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 	// Create VPC, resource group first
 	// ------------------------------------------------------------------------------------------------------
 
-	prefix := fmt.Sprintf("pp-%s", strings.ToLower(random.UniqueId()))
+	prefix := fmt.Sprintf("pp-%s", strings.ToLower(random.UniqueID()))
 	realTerraformDir := "./resources"
-	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
+	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueID())))
 
 	// Verify ibmcloud_api_key variable is set
 	checkVariable := "TF_VAR_ibmcloud_api_key"
@@ -118,8 +119,8 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 		Upgrade: true,
 	})
 
-	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
-	_, existErr := terraform.InitAndApplyE(t, existingTerraformOptions)
+	terraform.WorkspaceSelectOrNewContext(t, context.Background(), existingTerraformOptions, prefix)
+	_, existErr := terraform.InitAndApplyContextE(t, context.Background(), existingTerraformOptions)
 
 	if existErr != nil {
 		assert.True(t, existErr == nil, "Init and Apply of temp resources (VPC and Resource Group) failed")
@@ -132,7 +133,7 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 				fullyConfigurableTerraformDir + "/*.*",
 				"*.tf",
 			},
-			ResourceGroup:          terraform.Output(t, existingTerraformOptions, "resource_group_name"),
+			ResourceGroup:          terraform.OutputContext(t, context.Background(), existingTerraformOptions, "resource_group_name"),
 			TemplateFolder:         fullyConfigurableTerraformDir,
 			Tags:                   []string{"test-schematic"},
 			DeleteWorkspaceOnFail:  false,
@@ -141,9 +142,9 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 			{Name: "prefix", Value: prefix, DataType: "string"},
-			{Name: "existing_resource_group_name", Value: terraform.Output(t, existingTerraformOptions, "resource_group_name"), DataType: "string"},
-			{Name: "existing_vpc_crn", Value: terraform.Output(t, existingTerraformOptions, "vpc_crn"), DataType: "string"},
-			{Name: "existing_subnet_id", Value: terraform.Output(t, existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
+			{Name: "existing_resource_group_name", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "resource_group_name"), DataType: "string"},
+			{Name: "existing_vpc_crn", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "vpc_crn"), DataType: "string"},
+			{Name: "existing_subnet_id", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
 			{Name: "private_path_service_endpoints", Value: []string{"vpc-pps.dev.internal"}, DataType: "list(string)"},
 		}
 		err := options.RunSchematicTest()
@@ -157,8 +158,8 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
 	} else {
 		logger.Log(t, "START: Destroy (existing resources)")
-		terraform.Destroy(t, existingTerraformOptions)
-		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
+		terraform.DestroyContext(t, context.Background(), existingTerraformOptions)
+		terraform.WorkspaceDeleteContext(t, context.Background(), existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (existing resources)")
 	}
 }
@@ -169,9 +170,9 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 	// Create VPC, resource group first
 	// ------------------------------------------------------------------------------------------------------
 
-	prefix := fmt.Sprintf("pp-%s", strings.ToLower(random.UniqueId()))
+	prefix := fmt.Sprintf("pp-%s", strings.ToLower(random.UniqueID()))
 	realTerraformDir := "./resources"
-	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueId())))
+	tempTerraformDir, _ := files.CopyTerraformFolderToTemp(realTerraformDir, fmt.Sprintf(prefix+"-%s", strings.ToLower(random.UniqueID())))
 
 	// Verify ibmcloud_api_key variable is set
 	checkVariable := "TF_VAR_ibmcloud_api_key"
@@ -195,8 +196,8 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 		Upgrade: true,
 	})
 
-	terraform.WorkspaceSelectOrNew(t, existingTerraformOptions, prefix)
-	_, existErr := terraform.InitAndApplyE(t, existingTerraformOptions)
+	terraform.WorkspaceSelectOrNewContext(t, context.Background(), existingTerraformOptions, prefix)
+	_, existErr := terraform.InitAndApplyContextE(t, context.Background(), existingTerraformOptions)
 
 	if existErr != nil {
 		assert.True(t, existErr == nil, "Init and Apply of temp resources (VPC and Resource Group) failed")
@@ -209,7 +210,7 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 				fullyConfigurableTerraformDir + "/*.*",
 				"*.tf",
 			},
-			ResourceGroup:          terraform.Output(t, existingTerraformOptions, "resource_group_name"),
+			ResourceGroup:          terraform.OutputContext(t, context.Background(), existingTerraformOptions, "resource_group_name"),
 			TemplateFolder:         fullyConfigurableTerraformDir,
 			Tags:                   []string{"test-schematic"},
 			DeleteWorkspaceOnFail:  false,
@@ -218,9 +219,9 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 		options.TerraformVars = []testschematic.TestSchematicTerraformVar{
 			{Name: "ibmcloud_api_key", Value: options.RequiredEnvironmentVars["TF_VAR_ibmcloud_api_key"], DataType: "string", Secure: true},
 			{Name: "prefix", Value: prefix, DataType: "string"},
-			{Name: "existing_resource_group_name", Value: terraform.Output(t, existingTerraformOptions, "resource_group_name"), DataType: "string"},
-			{Name: "existing_vpc_crn", Value: terraform.Output(t, existingTerraformOptions, "vpc_crn"), DataType: "string"},
-			{Name: "existing_subnet_id", Value: terraform.Output(t, existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
+			{Name: "existing_resource_group_name", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "resource_group_name"), DataType: "string"},
+			{Name: "existing_vpc_crn", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "vpc_crn"), DataType: "string"},
+			{Name: "existing_subnet_id", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
 			{Name: "private_path_service_endpoints", Value: []string{"vpc-pps.dev.internal"}, DataType: "list(string)"},
 		}
 		err := options.RunSchematicUpgradeTest()
@@ -234,8 +235,8 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 		fmt.Println("Terratest failed. Debug the test and delete resources manually.")
 	} else {
 		logger.Log(t, "START: Destroy (existing resources)")
-		terraform.Destroy(t, existingTerraformOptions)
-		terraform.WorkspaceDelete(t, existingTerraformOptions, prefix)
+		terraform.DestroyContext(t, context.Background(), existingTerraformOptions)
+		terraform.WorkspaceDeleteContext(t, context.Background(), existingTerraformOptions, prefix)
 		logger.Log(t, "END: Destroy (existing resources)")
 	}
 }
