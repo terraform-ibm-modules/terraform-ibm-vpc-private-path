@@ -8,7 +8,7 @@ resource "ibm_is_lb" "ppnlb" {
   type           = "private_path"
   profile        = "network-private-path"
   resource_group = var.resource_group_id
-  tags           = var.tags
+  tags           = var.resource_tags
   access_tags    = var.access_tags
 }
 
