@@ -52,7 +52,7 @@ resource "ibm_is_ssh_key" "public_key" {
 
 module "vsi_image_selector" {
   source           = "terraform-ibm-modules/common-utilities/ibm//modules/vsi-image-selector"
-  version          = "1.6.1"
+  version          = "1.8.0"
   architecture     = "amd64"
   operating_system = "ubuntu"
   image_status     = "available"
