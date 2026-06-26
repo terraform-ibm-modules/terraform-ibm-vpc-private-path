@@ -134,6 +134,7 @@ No modules.
 | [ibm_is_private_path_service_gateway.private_path](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_private_path_service_gateway) | resource |
 | [ibm_is_private_path_service_gateway_account_policy.private_path_account_policies](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_private_path_service_gateway_account_policy) | resource |
 | [ibm_is_private_path_service_gateway_operations.private_path_publish](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_private_path_service_gateway_operations) | resource |
+| [ibm_iam_access_tag.access_tags](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/iam_access_tag) | data source |
 
 ### Inputs
 
