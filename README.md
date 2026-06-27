@@ -134,12 +134,13 @@ No modules.
 | [ibm_is_private_path_service_gateway.private_path](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_private_path_service_gateway) | resource |
 | [ibm_is_private_path_service_gateway_account_policy.private_path_account_policies](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_private_path_service_gateway_account_policy) | resource |
 | [ibm_is_private_path_service_gateway_operations.private_path_publish](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_private_path_service_gateway_operations) | resource |
+| [ibm_iam_access_tag.access_tags](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/iam_access_tag) | data source |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details. | `list(string)` | `[]` | no |
+| <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | Add access management tags to the Private Path service to control access. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#create-access-console). | `list(string)` | `[]` | no |
 | <a name="input_nlb_backend_pools"></a> [nlb\_backend\_pools](#input\_nlb\_backend\_pools) | A list describing backend pools for the private path network load balancer. | <pre>list(object({<br/>    pool_name                                = string<br/>    pool_algorithm                           = optional(string, "round_robin")<br/>    pool_health_delay                        = optional(number, 5)<br/>    pool_health_retries                      = optional(number, 2)<br/>    pool_health_timeout                      = optional(number, 2)<br/>    pool_health_type                         = optional(string, "tcp")<br/>    pool_health_monitor_url                  = optional(string, "/")<br/>    pool_health_monitor_port                 = optional(number, 80)<br/>    pool_member_port                         = optional(number)<br/>    pool_member_instance_ids                 = optional(list(string), [])<br/>    pool_member_reserved_ip_ids              = optional(list(string), [])<br/>    pool_member_application_load_balancer_id = optional(string)<br/>    listener_port                            = optional(number)<br/>    listener_accept_proxy_protocol           = optional(bool, false)<br/>  }))</pre> | `[]` | no |
 | <a name="input_nlb_name"></a> [nlb\_name](#input\_nlb\_name) | The name of the private path network load balancer. | `string` | `"pp-nlb"` | no |
 | <a name="input_private_path_account_policies"></a> [private\_path\_account\_policies](#input\_private\_path\_account\_policies) | The account-specific connection request policies. | <pre>list(object({<br/>    account       = string<br/>    access_policy = string<br/>  }))</pre> | `[]` | no |
@@ -149,8 +150,8 @@ No modules.
 | <a name="input_private_path_service_endpoints"></a> [private\_path\_service\_endpoints](#input\_private\_path\_service\_endpoints) | The list of name for the service endpoint where you want to connect your Private Path service. Enter a maximum number of 10 unique endpoint names for your service. | `list(string)` | n/a | yes |
 | <a name="input_private_path_zonal_affinity"></a> [private\_path\_zonal\_affinity](#input\_private\_path\_zonal\_affinity) | When enabled, the endpoint service preferentially permits connection requests from endpoints in the same zone. Without zonal affinity, requests are distributed to all instances in any zone. | `bool` | `false` | no |
 | <a name="input_resource_group_id"></a> [resource\_group\_id](#input\_resource\_group\_id) | The ID of the resource group where you want to create the service. | `string` | n/a | yes |
+| <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | Add user resource tags to the Private Path service to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types). | `list(string)` | `[]` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | ID of subnet. | `string` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | Optional list of tags to be added to the private path service. | `list(string)` | `[]` | no |
 
 ### Outputs
 
