@@ -52,7 +52,7 @@ resource "ibm_is_ssh_key" "public_key" {
 
 module "vsi_image_selector" {
   source           = "terraform-ibm-modules/common-utilities/ibm//modules/vsi-image-selector"
-  version          = "1.8.0"
+  version          = "1.9.0"
   architecture     = "amd64"
   operating_system = "ubuntu"
   image_status     = "available"
@@ -153,7 +153,7 @@ resource "ibm_is_subnet" "consumer_subnet" {
 
 module "vpe" {
   source            = "terraform-ibm-modules/vpe-gateway/ibm"
-  version           = "5.3.3"
+  version           = "5.3.4"
   resource_group_id = module.resource_group.resource_group_id
   vpc_id            = ibm_is_vpc.consumer_vpc.id
   cloud_service_by_crn = [
