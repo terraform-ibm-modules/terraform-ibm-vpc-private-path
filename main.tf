@@ -32,13 +32,28 @@ resource "ibm_is_lb_pool" "pool" {
   lb                  = ibm_is_lb.ppnlb.id
   name                = each.key
   algorithm           = each.value.pool_algorithm
-  protocol            = "tcp"
+  protocol            = each.value.pool_protocol
   health_delay        = each.value.pool_health_delay
   health_retries      = each.value.pool_health_retries
   health_timeout      = each.value.pool_health_timeout
   health_type         = each.value.pool_health_type
   health_monitor_port = each.value.pool_health_monitor_port
   health_monitor_url  = each.value.pool_health_type == "https" ? each.value.pool_health_monitor_url : null
+
+  dynamic "client_authentication" {
+    for_each = each.value.pool_client_authentication != null ? [each.value.pool_client_authentication] : []
+    content {
+      certificate_instance = client_authentication.value.certificate_instance
+    }
+  }
+
+  dynamic "server_authentication" {
+    for_each = each.value.pool_server_authentication != null ? [each.value.pool_server_authentication] : []
+    content {
+      certificate_authority = server_authentication.value.certificate_authority
+      verify_certificate    = server_authentication.value.verify_certificate
+    }
+  }
 }
 
 ##############################################################################
@@ -98,9 +113,18 @@ resource "ibm_is_lb_listener" "listener" {
   default_pool          = each.value.pool_id
   port_min              = each.value.listener_port
   port_max              = each.value.listener_port
-  protocol              = "tcp"
+  protocol              = each.value.listener_protocol
   accept_proxy_protocol = each.value.listener_accept_proxy_protocol
+  certificate_instance  = each.value.listener_certificate_instance
   depends_on            = [ibm_is_lb_pool_member.nlb_pool_members]
+
+  dynamic "client_authentication" {
+    for_each = each.value.listener_client_authentication != null ? [each.value.listener_client_authentication] : []
+    content {
+      certificate_authority       = client_authentication.value.certificate_authority
+      certificate_revocation_list = client_authentication.value.certificate_revocation_list
+    }
+  }
 }
 
 ##############################################################################

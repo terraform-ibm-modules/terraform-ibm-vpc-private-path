@@ -103,6 +103,7 @@ variable "network_loadbalancer_backend_pools" {
   type = list(object({
     pool_name                                = string
     pool_algorithm                           = optional(string, "round_robin")
+    pool_protocol                            = optional(string, "tcp")
     pool_health_delay                        = optional(number, 5)
     pool_health_retries                      = optional(number, 2)
     pool_health_timeout                      = optional(number, 2)
@@ -114,7 +115,20 @@ variable "network_loadbalancer_backend_pools" {
     pool_member_reserved_ip_ids              = optional(list(string), [])
     pool_member_application_load_balancer_id = optional(string)
     listener_port                            = optional(number)
+    listener_protocol                        = optional(string, "tcp")
     listener_accept_proxy_protocol           = optional(bool, false)
+    listener_certificate_instance            = optional(string)
+    listener_client_authentication = optional(object({
+      certificate_authority       = string
+      certificate_revocation_list = optional(string)
+    }))
+    pool_client_authentication = optional(object({
+      certificate_instance = string
+    }))
+    pool_server_authentication = optional(object({
+      certificate_authority = optional(string)
+      verify_certificate    = optional(bool)
+    }))
   }))
   default     = []
   description = "A list describing backend pools for the private path network load balancer. [Learn more](https://github.com/terraform-ibm-modules/terraform-ibm-vpc-private-path/tree/main/solutions/fully-configurable/DA_inputs.md#options-with-backend-pools)."
