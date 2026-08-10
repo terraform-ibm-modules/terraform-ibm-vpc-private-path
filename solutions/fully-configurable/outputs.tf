@@ -58,3 +58,13 @@ output "account_policy_id" {
   description = "The unique identifier of the PrivatePathServiceGatewayAccountPolicy."
   value       = module.private_path.account_policy_id
 }
+
+output "private_ip" {
+  description = "The list of reserved IP address reference assigned to this load balancer."
+  value       = module.private_path.private_ip
+}
+
+output "private_ips" {
+  description = "The private IP addresses (Reserved IP address reference) assigned to this load balancer."
+  value       = module.private_path.private_ips
+}
