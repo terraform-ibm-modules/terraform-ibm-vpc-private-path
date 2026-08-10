@@ -49,3 +49,13 @@ output "account_policy_id" {
   value = length(var.private_path_account_policies) != 0 ? [for id in ibm_is_private_path_service_gateway_account_policy.private_path_account_policies :
   id] : null
 }
+
+output "private_ip" {
+  description = "The list of reserved IP address reference assigned to this load balancer."
+  value       = ibm_is_lb.ppnlb.private_ip
+}
+
+output "private_ips" {
+  description = "The private IP addresses (Reserved IP address reference) assigned to this load balancer."
+  value       = ibm_is_lb.ppnlb.private_ips
+}
