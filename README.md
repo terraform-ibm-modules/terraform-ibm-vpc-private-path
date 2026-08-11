@@ -163,6 +163,8 @@ No modules.
 | <a name="output_listener_id"></a> [listener\_id](#output\_listener\_id) | The unique identifier of the load balancer listener. |
 | <a name="output_pool_id"></a> [pool\_id](#output\_pool\_id) | The unique identifier of the load balancer pool. |
 | <a name="output_pool_member_id"></a> [pool\_member\_id](#output\_pool\_member\_id) | The unique identifier of the load balancer pool member. |
+| <a name="output_private_ip"></a> [private\_ip](#output\_private\_ip) | The list of reserved IP address reference assigned to this load balancer. |
+| <a name="output_private_ips"></a> [private\_ips](#output\_private\_ips) | The private IP addresses (Reserved IP address reference) assigned to this load balancer. |
 | <a name="output_private_path_crn"></a> [private\_path\_crn](#output\_private\_path\_crn) | The CRN for this private path service gateway. |
 | <a name="output_private_path_id"></a> [private\_path\_id](#output\_private\_path\_id) | The unique identifier of the PrivatePathServiceGateway. |
 | <a name="output_private_path_vpc"></a> [private\_path\_vpc](#output\_private\_path\_vpc) | The VPC this private path service gateway resides in. |
