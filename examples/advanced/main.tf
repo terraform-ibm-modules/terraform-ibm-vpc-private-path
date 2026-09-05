@@ -97,6 +97,8 @@ module "private_path" {
   private_path_name                  = "${var.prefix}-pp"
   private_path_service_endpoints     = ["vpc-pps.dev.internal"]
   private_path_default_access_policy = "permit"
+  resource_tags                      = var.resource_tags
+  access_tags                        = var.access_tags
 
   nlb_backend_pools = [
     {

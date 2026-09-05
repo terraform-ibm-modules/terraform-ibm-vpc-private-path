@@ -110,11 +110,14 @@ resource "ibm_is_lb_listener" "listener" {
 ##############################################################################
 
 resource "ibm_is_private_path_service_gateway" "private_path" {
+  depends_on            = [data.ibm_iam_access_tag.access_tags] # Force dependency on data source validation to ensure access_tags exist and are valid before use.
   default_access_policy = var.private_path_default_access_policy
   load_balancer         = ibm_is_lb.ppnlb.id
   service_endpoints     = var.private_path_service_endpoints
   zonal_affinity        = var.private_path_zonal_affinity
   name                  = var.private_path_name
+  tags                  = var.resource_tags
+  access_tags           = var.access_tags
 }
 
 resource "ibm_is_private_path_service_gateway_operations" "private_path_publish" {
