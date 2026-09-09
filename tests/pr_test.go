@@ -146,6 +146,8 @@ func TestRunFullyConfigurableInSchematics(t *testing.T) {
 			{Name: "existing_vpc_crn", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "vpc_crn"), DataType: "string"},
 			{Name: "existing_subnet_id", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
 			{Name: "private_path_service_endpoints", Value: []string{"vpc-pps.dev.internal"}, DataType: "list(string)"},
+			{Name: "private_path_tags", Value: options.Tags, DataType: "list(string)"},
+			{Name: "private_path_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		}
 		err := options.RunSchematicTest()
 		assert.Nil(t, err, "This should not have errored")
@@ -223,6 +225,8 @@ func TestRunUpgradeFullyConfigurableInSchematics(t *testing.T) {
 			{Name: "existing_vpc_crn", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "vpc_crn"), DataType: "string"},
 			{Name: "existing_subnet_id", Value: terraform.OutputContext(t, context.Background(), existingTerraformOptions, "existing_subnet_id"), DataType: "string"},
 			{Name: "private_path_service_endpoints", Value: []string{"vpc-pps.dev.internal"}, DataType: "list(string)"},
+			{Name: "private_path_tags", Value: options.Tags, DataType: "list(string)"},
+			{Name: "private_path_access_tags", Value: permanentResources["accessTags"], DataType: "list(string)"},
 		}
 		err := options.RunSchematicUpgradeTest()
 		assert.Nil(t, err, "This should not have errored")

@@ -55,14 +55,16 @@ variable "prefix" {
 
 variable "private_path_tags" {
   type        = list(string)
-  description = "Optional list of tags to be added to the private path service."
+  description = "Add user resource tags to the Private Path service to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)."
   default     = []
+  nullable    = false
 }
 
 variable "private_path_access_tags" {
   type        = list(string)
-  description = "A list of access tags to apply to the private path service created by the module, see https://cloud.ibm.com/docs/account?topic=account-access-tags-tutorial for more details."
+  description = "Add access management tags to the Private Path service to control access. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#create-access-console)."
   default     = []
+  nullable    = false
 }
 
 ##############################################################################
