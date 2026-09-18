@@ -8,7 +8,7 @@ variable "resource_group_id" {
 
 variable "resource_tags" {
   type        = list(string)
-  description = "Add user resource tags to the Private Path service to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)."
+  description = "Add user resource tags to the Private Path service and Load Balancer to organize, track, and manage costs. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#tag-types)."
   default     = []
   nullable    = false
   validation {
@@ -19,7 +19,7 @@ variable "resource_tags" {
 
 variable "access_tags" {
   type        = list(string)
-  description = "Add access management tags to the Private Path service to control access. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#create-access-console)."
+  description = "Add access management tags to the Private Path service and Load Balancer to control access. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#create-access-console)."
   default     = []
   nullable    = false
 
