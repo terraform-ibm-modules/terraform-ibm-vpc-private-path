@@ -167,6 +167,8 @@ No modules.
 | <a name="output_private_ips"></a> [private\_ips](#output\_private\_ips) | The private IP addresses (Reserved IP address reference) assigned to this load balancer. |
 | <a name="output_private_path_crn"></a> [private\_path\_crn](#output\_private\_path\_crn) | The CRN for this private path service gateway. |
 | <a name="output_private_path_id"></a> [private\_path\_id](#output\_private\_path\_id) | The unique identifier of the PrivatePathServiceGateway. |
+| <a name="output_private_path_lifecycle_state"></a> [private\_path\_lifecycle\_state](#output\_private\_path\_lifecycle\_state) | The lifecycle state of the private path service gateway (e.g. stable, pending, failed). |
+| <a name="output_private_path_published"></a> [private\_path\_published](#output\_private\_path\_published) | Whether the private path service gateway is published and reachable by consumers. |
 | <a name="output_private_path_vpc"></a> [private\_path\_vpc](#output\_private\_path\_vpc) | The VPC this private path service gateway resides in. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

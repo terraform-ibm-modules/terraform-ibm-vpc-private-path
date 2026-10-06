@@ -68,3 +68,13 @@ output "private_ips" {
   description = "The private IP addresses (Reserved IP address reference) assigned to this load balancer."
   value       = module.private_path.private_ips
 }
+
+output "private_path_published" {
+  description = "Whether the private path service gateway is published and reachable by consumers."
+  value       = module.private_path.private_path_published
+}
+
+output "private_path_lifecycle_state" {
+  description = "The lifecycle state of the private path service gateway (e.g. stable, pending, failed)."
+  value       = module.private_path.private_path_lifecycle_state
+}
