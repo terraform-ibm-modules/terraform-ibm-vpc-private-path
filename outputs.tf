@@ -61,11 +61,11 @@ output "private_ips" {
 }
 
 output "private_path_published" {
-  description = "Whether the private path service gateway is published and reachable by consumers."
+  description = "Indicates whether the Private Path service gateway is published (true) or unpublished (false). When published, authorized consumer accounts and VPCs can discover and connect to the service."
   value       = ibm_is_private_path_service_gateway_operations.private_path_publish.published
 }
 
 output "private_path_lifecycle_state" {
-  description = "The lifecycle state of the private path service gateway (e.g. stable, pending, failed)."
+  description = "The lifecycle state of the Private Path service gateway (for example: stable, updating, waiting, suspended, failed)."
   value       = ibm_is_private_path_service_gateway.private_path.lifecycle_state
 }
