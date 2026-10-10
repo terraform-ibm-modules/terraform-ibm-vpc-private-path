@@ -115,7 +115,7 @@ You need the following permissions to run this module.
 ### Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 2.6.2, < 3.0.0 |
 
@@ -126,7 +126,7 @@ No modules.
 ### Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [ibm_is_lb.ppnlb](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb) | resource |
 | [ibm_is_lb_listener.listener](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb_listener) | resource |
 | [ibm_is_lb_pool.pool](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/is_lb_pool) | resource |
@@ -139,7 +139,7 @@ No modules.
 ### Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_access_tags"></a> [access\_tags](#input\_access\_tags) | Add access management tags to the Private Path service and Load Balancer to control access. [Learn more](https://cloud.ibm.com/docs/account?topic=account-tag&interface=ui#create-access-console). | `list(string)` | `[]` | no |
 | <a name="input_nlb_backend_pools"></a> [nlb\_backend\_pools](#input\_nlb\_backend\_pools) | A list describing backend pools for the private path network load balancer. | <pre>list(object({<br/>    pool_name                                = string<br/>    pool_algorithm                           = optional(string, "round_robin")<br/>    pool_health_delay                        = optional(number, 5)<br/>    pool_health_retries                      = optional(number, 2)<br/>    pool_health_timeout                      = optional(number, 2)<br/>    pool_health_type                         = optional(string, "tcp")<br/>    pool_health_monitor_url                  = optional(string, "/")<br/>    pool_health_monitor_port                 = optional(number, 80)<br/>    pool_member_port                         = optional(number)<br/>    pool_member_instance_ids                 = optional(list(string), [])<br/>    pool_member_reserved_ip_ids              = optional(list(string), [])<br/>    pool_member_application_load_balancer_id = optional(string)<br/>    listener_port                            = optional(number)<br/>    listener_accept_proxy_protocol           = optional(bool, false)<br/>  }))</pre> | `[]` | no |
 | <a name="input_nlb_name"></a> [nlb\_name](#input\_nlb\_name) | The name of the private path network load balancer. | `string` | `"pp-nlb"` | no |
@@ -156,7 +156,7 @@ No modules.
 ### Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_account_policy_id"></a> [account\_policy\_id](#output\_account\_policy\_id) | The unique identifier of the PrivatePathServiceGatewayAccountPolicy. |
 | <a name="output_lb_crn"></a> [lb\_crn](#output\_lb\_crn) | The CRN for this load balancer. |
 | <a name="output_lb_id"></a> [lb\_id](#output\_lb\_id) | The unique identifier of the load balancer. |
